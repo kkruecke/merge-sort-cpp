@@ -1,0 +1,5 @@
+Change the code to use std::array<T> instead of built-in arrays. 
+
+Change the code to use template parameter of Container, where the Container must support the dereference operator. This will allow unique_ptr,
+shared_ptr and built-in raw pointers to be used with the parameterize merge sort.
+
