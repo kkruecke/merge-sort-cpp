@@ -3,3 +3,9 @@ Change the code to use std::array<T> instead of built-in arrays.
 Change the code to use template parameter of Container, where the Container must support the dereference operator. This will allow unique_ptr,
 shared_ptr and built-in raw pointers to be used with the parameterize merge sort.
 
+Use the Stroustrup simplifying technique of using a template function to deduce the value of the template.
+
+See if using a alias will help.
+
+Add the basic std library types?
+
