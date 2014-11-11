@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include "generic-merge-sort.h"
+#include "merge-sort.h"
 #include "print-array.h"
 using namespace std;
 
