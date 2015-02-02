@@ -9,11 +9,11 @@ template<typename T> static void do_merge_sort(T *a, int first, int last, T *buf
 template<typename T> void merge_sort(T *a, int first, int last)
 {
     // allocate a working buffer for our merges
-    T *buffer = new T[last + 1 - first];
+    T *temp_buffer = new T[last + 1 - first];
     
-    do_merge_sort<T>(a, first, last, buffer);
+    do_merge_sort<T>(a, first, last, temp_buffer);
     
-    delete [] buffer;
+    delete [] temp_buffer;
 }
 
 template<typename T> static void do_merge_sort(T *a, int first, int last, T *buffer)
@@ -40,8 +40,8 @@ template<typename T> static void merge(T *a, int first, int mid, int last, T *bu
     
     int index = 0;
     /* 
-     * While both subarrays are not empty, copy the smaller item into the 
-     * temporary array.
+     * While both sub-arrays are not empty, copy the smaller item into the 
+     * temporary array buffer.
      */
     for (; first1 <= last1 && first2 <= last2; ++index) {
         
@@ -56,25 +56,25 @@ template<typename T> static void merge(T *a, int first, int mid, int last, T *bu
         }
     }
     
-    // finish off the first subarray, if necessary
+    // finish off the first sub-array, if necessary
     for (;first1 <= last1; first1++, index++) {
         
         buffer[index] = a[first1];
     }
     
-    // finish off the second subarray, if necessary
+    // finish off the second sub-array, if necessary
     for (;first2 <= last2; first2++, index++) {
         
         buffer[index] = a[first2];
     }
          
     // copy the temp array to the original array
-    int start = first;
+    
     int length = last + 1 - first;
     
-    for (index = 0; index < length; ++index, ++start) {
+    for (index = 0; index < length; ++index) {
         
-        a[start] = buffer[index];
+        a[first++] = buffer[index];
     }
 }
 #endif

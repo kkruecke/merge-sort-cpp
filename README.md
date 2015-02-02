@@ -1,1 +1,1 @@
-Implementation of merge sort algorithm in C++.
+Implementation of merge sort algorithm in C++ and Big O analysis.
