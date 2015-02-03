@@ -1,9 +1,6 @@
 #ifndef GERNEIC_MERGE_SORT_H
 #define GERNEIC_MERGE_SORT_H
 
-#include <cstring>
-#include <array>
-
 template<typename T, typename Comparator> static void merge(T *a, int first, int mid, int last, T *buffer, Comparator C);
 template<typename T, typename Comparator> static void do_merge_sort(T *a, int first, int last, T *buffer, Comparator C);
 

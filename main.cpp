@@ -1,6 +1,5 @@
 #include <cstdlib>
-//--#include "merge-sort.h"
-#include "new.h"
+#include "merge-sort.h"
 #include "print-array.h"
 #include <functional>
 using namespace std;
