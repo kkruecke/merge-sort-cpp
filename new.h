@@ -4,35 +4,35 @@
 #include <cstring>
 #include <array>
 
-template<typename T> static void merge(T *a, int first, int mid, int last, T *buffer);
-template<typename T> static void do_merge_sort(T *a, int first, int last, T *buffer);
+template<typename T, typename Comparator> static void merge(T *a, int first, int mid, int last, T *buffer, Comparator C);
+template<typename T, typename Comparator> static void do_merge_sort(T *a, int first, int last, T *buffer, Comparator C);
 
-template<typename T> void merge_sort(T *a, int first, int last)
+template<typename T, typename Comparator> void merge_sort(T *a, int first, int last, Comparator C)
 {
     // allocate a working buffer for our merges
     T *temp_buffer = new T[last + 1 - first];
    
-    do_merge_sort<T>(a, first, last, temp_buffer);
+    do_merge_sort<T, Comparator>(a, first, last, temp_buffer, C);
     
     delete [] temp_buffer;
 }
 
-template<typename T> static void do_merge_sort(T *a, int first, int last, T *buffer)
+template<typename T, typename Comparator> static void do_merge_sort(T *a, int first, int last, T *buffer, Comparator C)
 {
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
         
         int mid = (first + last) / 2; // index of mid point
         
-        do_merge_sort<T>(a, first, mid, buffer);    // sort left half
-        do_merge_sort<T>(a, mid + 1, last, buffer); // sort right half
+        do_merge_sort<T, Comparator>(a, first, mid, buffer, C);    // sort left half
+        do_merge_sort<T, Comparator>(a, mid + 1, last, buffer, C); // sort right half
         
         // merge the two halves
-        merge<T>(a, first, mid, last, buffer);
+        merge<T, Comparator>(a, first, mid, last, buffer, C);
     }
 }
 
-template<typename T> static void merge(T *a, int first, int mid, int last, T *buffer)
+template<typename T, typename Comparator> static void merge(T *a, int first, int mid, int last, T *buffer, Comparator compare)
 {
     int first1 = first;
     int last1 = mid;
@@ -46,10 +46,11 @@ template<typename T> static void merge(T *a, int first, int mid, int last, T *bu
      */
     for (; first1 <= last1 && first2 <= last2; ++index) {
         
-        if (a[first1] < a[first2]) {
+        if ( compare(a[first1], a[first2]) ) {
             
             buffer[index] = a[first1];
             first1++;
+
         } else {
             
             buffer[index] = a[first2];
