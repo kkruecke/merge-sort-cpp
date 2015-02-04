@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include "merge-sort.h"
+#include "new-merge-sort.h"
 #include "print-array.h"
 #include <functional>
 using namespace std;
@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 
   print_array(a, 0, size - 1);
  */
-  merge_sort(a, 0, size - 1, c);
+  merge_sort<int>(&a[0], a + size - 1, c);
 
   print_array(a, 0, size - 1);
   return 0;
