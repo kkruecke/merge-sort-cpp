@@ -1,7 +1,8 @@
 #include <cstdlib>
 #include "merge-sort-orig.h"
-#include "print-array.h"
+#include <iostream>
 #include <functional>
+#include <iterator>
 using namespace std;
 
 int main(int argc, char** argv)
@@ -12,7 +13,7 @@ int main(int argc, char** argv)
   std::less<int> c; 
 
   merge_sort(a, 0, size - 1, c);
-
-  print_array(a, 0, size - 1);
+  
+  copy(a, a + size, ostream_iterator<int>(cout, ", ")); 
   return 0;
 }
