@@ -1,5 +1,5 @@
-#ifndef ANIMATED_MERGE_SORT_H
-#define ANIMATED_MERGE_SORT_H
+#ifndef MERGE_SORT_H
+#define MERGE_SORT_H
 
 /*
  * An array iterator, which temp_buffer is, is different potentially of a different type than that the iterator types of parameters first, mid and last--all of
