@@ -24,34 +24,23 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 }
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
-                                                                  Iterator_type2 buffer, Comparator c, int depth = 0) 
+                                                                  Iterator_type2 buffer, Comparator c) 
 {
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
-
-        std::cout << "Input at depth " << depth << " ";
-
-	std::copy(first, last, std::ostream_iterator< decltype(c) > (std::cout, ", "));
-
-	std::cout << std::endl;
 
         int mid = (last - first) / 2; // index of mid point
         
         Iterator_type1 mid_iterator = first + mid;
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
         
-        do_merge_sort(first, mid_iterator, buffer, c, depth + 1);    // sort left half
+        do_merge_sort(first, mid_iterator, buffer, c);    // sort left half
          
-        do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1); // sort right half
+        do_merge_sort(mid_iterator_plus1, last, buffer, c); // sort right half
         
         // merge the two halves
         merge(first, mid_iterator, last, buffer, c);
         
-        std::cout << "Merged Output at depth " << depth << " ";
-
-	std::copy(first, last, std::ostream_iterator< decltype(c) > (std::cout, ", "));
-
-	std::cout << std::endl;
     }
 }
 

@@ -1,8 +1,9 @@
 #include <cstdlib>
-#include "merge-sort.h"
+#include "animated-merge-sort.h"
 #include <iostream>
 #include <functional>
 #include <iterator>
+
 using namespace std;
 
 int main(int argc, char** argv)

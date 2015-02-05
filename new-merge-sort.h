@@ -2,8 +2,7 @@
 #define GERNEIC_MERGE_SORT_H
 
 /*
- * An array iterator, which temp_buffer is, is different potentially of a different type than that the iterator types of parameters first, mid and last--all of
- * which could be different data structures. Therefore two iterator types are needed in the event that the data structure being sorted is not an array.
+ * In this code end is one past the actual last value. 
  */
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid,
         Iterator_type1 last,
