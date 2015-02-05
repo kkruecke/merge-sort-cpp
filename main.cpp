@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include "merge-sort.h"
-//--#include "print-array.h"
 #include <iostream>
 #include <functional>
 #include <iterator>

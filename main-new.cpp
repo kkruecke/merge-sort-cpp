@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include "merge-sort-orig.h"
+#include "new-merge-sort.h"
 #include <iostream>
 #include <functional>
 #include <iterator>
@@ -11,9 +11,9 @@ int main(int argc, char** argv)
 
   int size = sizeof(a)/sizeof(int);
   std::less<int> c; 
+ 
+  merge_sort<int>(&a[0], a + size - 1, c);
 
-  merge_sort(a, 0, size - 1, c);
-  
   copy(a, a + size, ostream_iterator<int>(cout, ", ")); 
   return 0;
 }

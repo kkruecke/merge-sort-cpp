@@ -1,3 +1,1 @@
-new-merge-sort.h is an iterator-based implementation used by new-main.cpp. It has been tested a little. But it has a potential bug. See the comment at the top of
-new-merge-sort.h as to the possible iterator type mismatch bug if an non-array data structure passed. This can possibly be solved by introducing a second iterator
-type, or simply hardcoding T * as the other iterator type (since that is the actual type).
+Change merge_sort to use end+1 iterator and < insteand of <= comparison.
