@@ -43,15 +43,18 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
         
-        print_stdout(first, last, depth, std::string("Input data at depth "));
-        
+                
         int mid = (last - first) / 2; // index of mid point
         
         Iterator_type1 mid_iterator = first + mid;
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
-        
+
+        print_stdout(first, mid_iterator, depth + 1, std::string("Calling merge_sort on left half at depth "));
+ 
         do_merge_sort(first, mid_iterator, buffer, c, depth + 1);    // sort left half
-         
+
+        print_stdout(mid_iterator_plus1, last, depth + 1, std::string("Calling merge_sort on right half at depth "));
+ 
         do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1); // sort right half
         
         // merge the two halves
