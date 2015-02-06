@@ -59,7 +59,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         // merge the two halves
         merge(first, mid_iterator, last, buffer, c);
         
-        print_stdout(first, last, depth, std::string("Merged Output at depth "));
+        print_stdout(first, last, depth, std::string("Finished left and right recursive calls. Merged result at depth "));
 
     } else {
 
