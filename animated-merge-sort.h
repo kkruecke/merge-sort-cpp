@@ -9,7 +9,8 @@
 template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, std::string prefix_msg)
 {
     std::cout << prefix_msg << depth << ": ";
-                              
+    
+    // Since last is the actual last element (and not one pass it), we need to add one because copy() requires "one past".                          
     std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
         
     std::cout << std::endl;
