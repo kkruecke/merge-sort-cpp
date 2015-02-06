@@ -10,7 +10,7 @@ template<typename Iterator> static void print_stdout(Iterator first, Iterator la
 {
     std::cout << prefix_msg << depth << ": ";
                               
-    std::copy(first, last, std::ostream_iterator<decltype(*first)>(std::cout, " "));
+    std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
         
     std::cout << std::endl;
 }
@@ -42,7 +42,6 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
 {
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
-        
                 
         int mid = (last - first) / 2; // index of mid point
         
@@ -61,6 +60,10 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         merge(first, mid_iterator, last, buffer, c);
         
         print_stdout(first, last, depth, std::string("Merged Output at depth "));
+
+    } else {
+
+        std::cout << "Nothing to do at depth " << depth << "." <<std::endl;
     }
 }
 
