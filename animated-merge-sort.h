@@ -12,9 +12,7 @@ class Animator {
 public:    
     
   enum section {none, left, right };
-  
-  template<typename Iterator> void print_stdout(Iterator first, Iterator last, int depth, Animator::section s); 
-  void print_stdout(std::string str, Animator::section sec, int depth);
+  template<typename Iterator> void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
 
 private:
 
@@ -22,7 +20,6 @@ private:
 
     static std::string get_string(section s)
     {
-
        return Animator::mapping[s];
     } 
 };
@@ -32,7 +29,7 @@ std::map<Animator::section, std::string>  Animator::mapping { {none, std::string
                          {right, std::string("right")}
                             };
 
-template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec) 
+template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix)
 {
   std::string part = Animator::get_string(sec);
 
@@ -41,19 +38,9 @@ template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator
   // Since last is the actual last element (and not one pass it), we  add one because copy() requires "one past".                          
   std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
         
-  std::cout << std::endl;
+  std::cout << suffix << std::endl;
 }
 
-void Animator::print_stdout(std::string str, Animator::section sec, int depth)
-{
-// TODO: We still need to print the input, which will be only one value.
-    
-  std::string part = Animator::get_string(sec);
-
-  std::cout << "At depth " << depth << ". Section:  " << part << ": " << str << std::endl;
-    
-  return;  
-}
 /*
  * Two iterator types are needed. The data structure being sorted may not an array.
  */
@@ -100,7 +87,7 @@ static Animator animator;
 
     } else {
 
-        animator.print_stdout(std::string("Recursion base case encountered"), sec, depth);
+        animator.print_stdout(first, last, depth, sec, std::string(" <--Recursion base case encountered"));
     }
 }
 
