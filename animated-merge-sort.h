@@ -7,50 +7,35 @@
 #include <iterator>
 #include <map>
 
-class partition { 
+class Animator { 
 
 public:    
     
   enum section {none, left, right };
   
-  std::string get_string(section s) const;
-  
+  template<typename Iterator> void print_stdout(Iterator first, Iterator last, int depth, Animator::section s); 
+  void print_stdout(std::string str, Animator::section sec, int depth);
+
 private:
+
     static  std::map<section, std::string> mapping;
-};p
 
- partition::std::map<partition::section, std::string>::mapping { {none, std::string("none"), 
-                                                                  {left, std::string("left"),
-                                                                  {right, std::string("right")
-                                                                  };
- 
- inline std::string partition::get_string(partition::section s) const
- {
-     return partition::mapping[s];
- }
+    static std::string get_string(section s)
+    {
 
-template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, partition::section sec) 
+       return Animator::mapping[s];
+    } 
+};
+       
+std::map<Animator::section, std::string>  Animator::mapping { {none, std::string("none")}, 
+                         {left, std::string("left")},
+                         {right, std::string("right")}
+                            };
+
+template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec) 
 {
-  std::string part;
+  std::string part = Animator::get_string(sec);
 
-  switch (sec) {
-
-    case partition::none:
-        
-           part = std::string("whole");           
-           break;
-
-      case partition::left:
-    
-           part = std::string("left ");           
-           break;
-
-      case partition::right:
-          
-           part = std::string("right");           
-           break;
-  }
-  
   std::cout << "At depth " << depth << ". Section:  " << part << ": ";
     
   // Since last is the actual last element (and not one pass it), we  add one because copy() requires "one past".                          
@@ -59,6 +44,16 @@ template<typename Iterator> static void print_stdout(Iterator first, Iterator la
   std::cout << std::endl;
 }
 
+void Animator::print_stdout(std::string str, Animator::section sec, int depth)
+{
+// TODO: We still need to print the input, which will be only one value.
+    
+  std::string part = Animator::get_string(sec);
+
+  std::cout << "At depth " << depth << ". Section:  " << part << ": " << str << std::endl;
+    
+  return;  
+}
 /*
  * Two iterator types are needed. The data structure being sorted may not an array.
  */
@@ -68,7 +63,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         Comparator C, int depth);
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
-                                                                  Iterator_type2 buffer, Comparator C, int depth = 0, partition::section sec = partition::none);
+                                                                  Iterator_type2 buffer, Comparator C, int depth = 0, Animator::section sec = Animator::none);
 
 
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
@@ -82,28 +77,30 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 }
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
-                                                                  Iterator_type2 buffer, Comparator c, int depth, partition::section sec) 
+                                                                  Iterator_type2 buffer, Comparator c, int depth, Animator::section sec) 
 {
+static Animator animator;
+
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
 
-        print_stdout(first, last, depth + 1, sec);
+        animator.print_stdout(first, last, depth + 1, sec);
                 
         int mid = (last - first) / 2; // index of mid point
         
         Iterator_type1 mid_iterator = first + mid;
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
 
-        do_merge_sort(first, mid_iterator, buffer, c, depth + 1, partition::section::left);    // sort left half
+        do_merge_sort(first, mid_iterator, buffer, c, depth + 1, Animator::section::left);    // sort left half
 
-        do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, partition::section::right); // sort right half
+        do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // sort right half
         
         // merge the two halves
         merge(first, mid_iterator, last, buffer, c, depth);
 
     } else {
 
-        std::cout << "Recursion base case. Depth  " << depth << ". Section: " << std::string(std::endl;
+        animator.print_stdout(std::string("Recursion base case encountered"), sec, depth);
     }
 }
 
