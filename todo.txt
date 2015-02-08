@@ -1,1 +1,1 @@
-Change merge_sort to use end+1 iterator and < insteand of <= comparison.
+See TODOES in animated-merge-sort.h
