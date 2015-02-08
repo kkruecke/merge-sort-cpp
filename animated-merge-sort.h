@@ -151,6 +151,9 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     }
 
     std::cout << std::string(" [ "); 
+    
+    // TODO: range is wrong.
+    // TODO: USe range syntax with iterators (in this case pointers).
 
     std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
 

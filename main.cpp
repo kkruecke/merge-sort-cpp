@@ -15,6 +15,6 @@ int main(int argc, char** argv)
  
   merge_sort<int>(&a[0], &a[0] + array_size - 1, c);
 
-  copy(a, a + size, ostream_iterator<int>(cout, ", ")); 
+  copy(a, a + array_size, ostream_iterator<int>(cout, ", ")); 
   return 0;
 }
