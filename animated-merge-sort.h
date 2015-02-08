@@ -12,7 +12,7 @@ class Animator {
 public:    
     
   enum section {none, left, right };
-  template<typename Iterator> void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
+  static template<typename Iterator> void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
 
 private:
 
@@ -66,12 +66,11 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator c, int depth, Animator::section sec) 
 {
-static Animator animator;
 
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
 
-        animator.print_stdout(first, last, depth + 1, sec);
+        Animator::print_stdout(first, last, depth + 1, sec);
                 
         int mid = (last - first) / 2; // index of mid point
         
@@ -87,7 +86,7 @@ static Animator animator;
 
     } else {
 
-        animator.print_stdout(first, last, depth, sec, std::string(" <--Recursion base case encountered"));
+        Animator::print_stdout(first, last, depth, sec, std::string(" <--Recursion ends."));
     }
 }
 
