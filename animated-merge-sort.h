@@ -66,7 +66,6 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator c, int depth, Animator::section sec) 
 {
-
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
 
@@ -77,9 +76,9 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         Iterator_type1 mid_iterator = first + mid;
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
 
-        do_merge_sort(first, mid_iterator, buffer, c, depth + 1, Animator::section::left);    // sort left half
+        do_merge_sort(first, mid_iterator, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
 
-        do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // sort right half
+        do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
         
         // merge the two halves
         merge(first, mid_iterator, last, buffer, c, depth);
@@ -98,6 +97,10 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     
     Iterator_type1 first2 = mid + 1;
     Iterator_type1 last2 = last;
+    
+    /*
+     * Print out input arrays to be merged....
+     */
 
     std::cout << "merging : [ ";
 
@@ -154,9 +157,8 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
 
     std::cout << std::string(" [ "); 
     
-    // TODO: range is wrong.
-    // TODO: USe range syntax with iterators (in this case pointers).
-
+    // print out merged array
+    
     std::copy(first_extra, first_extra + length, std::ostream_iterator<decltype(*first)>(std::cout, " "));
 
     std::cout << std::string(" ] ") << std::endl;
