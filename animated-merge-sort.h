@@ -24,8 +24,8 @@ private:
     } 
 };
        
-std::map<Animator::section, std::string>  Animator::mapping { {none, std::string("none")}, 
-                         {left, std::string("left")},
+std::map<Animator::section, std::string>  Animator::mapping { {none, std::string(" none")}, 
+                         {left, std::string(" left")},
                          {right, std::string("right")}
                             };
 
@@ -86,7 +86,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
 
     } else {
 
-        Animator::print_stdout(first, last, depth, sec, std::string(" <--Recursion ends."));
+        Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends."));
     }
 }
 
