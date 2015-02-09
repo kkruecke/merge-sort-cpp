@@ -144,21 +144,20 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         *buffer_cursor = *first2;
     }
          
-   // copy the temp array to the original array
-   int length = last + 1 - first;
-   Iterator_type2 start = buffer_start;
+    // copy the temp array to the original array
+    int length = last + 1 - first;
+    Iterator_type2 start = buffer_start;
 
-   Iterator_type2 first_extra = first; 
+    Iterator_type2 first_extra = first; 
    
     for (Iterator_type1 end = start + length; start != end; ++start) {
         
         *first++ = *start;
     }
 
-    std::cout << std::string(" [ "); 
-    
     // print out merged array
-    
+    std::cout << std::string(" [ "); 
+            
     std::copy(first_extra, first_extra + length, std::ostream_iterator<decltype(*first)>(std::cout, " "));
 
     std::cout << std::string(" ] ") << std::endl;
