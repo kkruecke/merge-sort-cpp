@@ -10,9 +10,9 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-  array<int, 4> a;
+  array<int, 32> a;
 
-  int n{4};
+  int n = a.size();
 
   generate(a.begin(), a.end(), [&]{ return n--; }); 
     
