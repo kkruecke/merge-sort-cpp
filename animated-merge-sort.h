@@ -7,13 +7,11 @@
 #include <iterator>
 #include <map>
 
-
 class Animator { 
   public:    
     
     enum section {none, left, right };
     template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
-
   private:
 
     static  std::map<section, std::string> mapping;
@@ -23,14 +21,6 @@ class Animator {
        return Animator::mapping[s];
     } 
 };
-
-// TODO: implement
-/*
-void print_array(...)
-{
-
-}
- */ 
        
 std::map<Animator::section, std::string>  Animator::mapping { {none, std::string("  all")}, 
                          {left, std::string(" left")},
@@ -47,6 +37,19 @@ template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator
   std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
         
   std::cout << suffix << std::endl;
+}
+
+/*
+ * Parameter end must be one past the actual end.
+ */
+template<typename Iterator> void print_array(Iterator start, Iterator end)
+{
+    // print out merged array
+    std::cout << std::string(" [ "); 
+            
+    std::copy(start, end, std::ostream_iterator<decltype(*start)>(std::cout, " "));
+
+    std::cout << std::string("] "); 
 }
 
 /*
@@ -110,15 +113,13 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
      * Print out input arrays to be merged....
      */
 
-    std::cout << "merging : [ ";
+    std::cout << "merging : ";
 
-    std::copy(first1, last1 + 1, std::ostream_iterator<decltype(*first1)>(std::cout, " "));
+    print_array(first1, last1 +  1);
 
-    std::cout << "], [ ";
+    print_array(first2, last2 +  1);
 
-    std::copy(first2, last2 + 1, std::ostream_iterator<decltype(*first1)>(std::cout, " "));
-
-    std::cout << "] " <<  std::string(" ---> ");
+    std::cout <<  std::string("  ---> ");
 
     int index = 0;
     
@@ -164,10 +165,15 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     }
 
     // print out merged array
+    print_array(first_extra, first_extra + length);
+
+    std::cout << std::endl;
+/*
     std::cout << std::string(" [ "); 
             
     std::copy(first_extra, first_extra + length, std::ostream_iterator<decltype(*first)>(std::cout, " "));
 
     std::cout << std::string(" ] ") << std::endl;
+*/
 }
 #endif
