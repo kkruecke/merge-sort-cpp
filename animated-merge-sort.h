@@ -7,14 +7,14 @@
 #include <iterator>
 #include <map>
 
+
 class Animator { 
-
-public:    
+  public:    
     
-  enum section {none, left, right };
-  template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
+    enum section {none, left, right };
+    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
 
-private:
+  private:
 
     static  std::map<section, std::string> mapping;
 
@@ -25,12 +25,14 @@ private:
 };
 
 // TODO: implement
+/*
 void print_array(...)
 {
 
 }
+ */ 
        
-std::map<Animator::section, std::string>  Animator::mapping { {none, std::string(" none")}, 
+std::map<Animator::section, std::string>  Animator::mapping { {none, std::string("  all")}, 
                          {left, std::string(" left")},
                          {right, std::string("right")}
                             };
@@ -50,7 +52,7 @@ template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator
 /*
  * Two iterator types are needed. The data structure being sorted may not an array.
  */
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid,
         Iterator_type1 last,
         Iterator_type2 buffer_start,
         Comparator C, int depth);
@@ -59,12 +61,12 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
                                                                   Iterator_type2 buffer, Comparator C, int depth = 0, Animator::section sec = Animator::none);
 
 
-template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
+template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c)
 {
    // allocate a working buffer for our merges
    T *temp_buffer = new T[last + 1 - first];
     
-   do_merge_sort(first, last, temp_buffer, C);
+   do_merge_sort(first, last, temp_buffer, c);
     
    delete [] temp_buffer;
 }
@@ -87,7 +89,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
         
         // merge the two halves
-        merge(first, mid_iterator, last, buffer, c, depth);
+        do_merge(first, mid_iterator, last, buffer, c, depth);
 
     } else {
 
@@ -95,7 +97,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     }
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
                                                                   Iterator_type2 buffer_start, Comparator compare, int depth)
 {
     Iterator_type1 first1 = first;

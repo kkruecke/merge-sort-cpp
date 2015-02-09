@@ -5,7 +5,7 @@
  * An array iterator, which temp_buffer is, is different potentially of a different type than that the iterator types of parameters first, mid and last--all of
  * which could be different data structures. Therefore two iterator types are needed in the event that the data structure being sorted is not an array.
  */
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid,
         Iterator_type1 last,
         Iterator_type2 buffer_start,
         Comparator C);
@@ -39,12 +39,12 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         do_merge_sort(mid_iterator_plus1, last, buffer, c); // sort right half
         
         // merge the two halves
-        merge(first, mid_iterator, last, buffer, c);
+        do_merge(first, mid_iterator, last, buffer, c);
         
     }
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
                                                                   Iterator_type2 buffer_start, Comparator compare)
 {
     Iterator_type1 first1 = first;
