@@ -23,6 +23,12 @@ private:
        return Animator::mapping[s];
     } 
 };
+
+// TODO: implement
+void print_array(...)
+{
+
+}
        
 std::map<Animator::section, std::string>  Animator::mapping { {none, std::string(" none")}, 
                          {left, std::string(" left")},
