@@ -80,7 +80,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
 
-        Animator::print_stdout(first, last, depth + 1, sec);
+        Animator::print_stdout(first, last, depth, sec);
                 
         int mid = (last - first) / 2; // index of mid point
         

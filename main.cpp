@@ -10,25 +10,9 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-/*
-  int a[32]; 
+  array<int, 4> a;
 
-  int n = 32;
-  
-  int array_size = sizeof(a)/sizeof(int);
-  
-  generate(a, a + array_size, [&]{ return n--; }); 
-    
-  std::less<int> c; 
- 
-  merge_sort<int>(&a[0], &a[0] + array_size - 1, c);
-
-  cout << "\n" <<  "Output of merge sort: " << "\n";
-  copy(a, a + array_size, ostream_iterator<int>(cout, ", ")); 
-*/ 
-  array<int, 32> a;
-
-  int n{32};
+  int n{4};
 
   generate(a.begin(), a.end(), [&]{ return n--; }); 
     
@@ -41,6 +25,8 @@ int main(int argc, char** argv)
   cout << "\n" <<  "Output of merge sort: " << "\n";
 
   copy(a.begin(), a.end(), ostream_iterator<int>(cout, ", ")); 
+
+  return 0;
 
 // Sort built-in array
 
