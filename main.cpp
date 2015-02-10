@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include "animated-merge-sort.h"
+#include "animated-merge-sort.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
@@ -16,15 +16,17 @@ int main(int argc, char** argv)
 
   generate(a.begin(), a.end(), [&]{ return n--; }); 
     
-  std::less<int> c; 
+  less<int> c; 
  
   cout << "=============== Sort of std::array<int, 32> below ================\n";
 
-  merge_sort<int>(a.begin(), a.end() - 1, c);
+  algolib::merge_sort<int>(a.begin(), a.end() - 1, c);
 
   cout << "\n" <<  "Output of merge sort: " << "\n";
 
   copy(a.begin(), a.end(), ostream_iterator<int>(cout, ", ")); 
+
+  cout << endl;
 
   return 0;
 
@@ -40,13 +42,15 @@ int main(int argc, char** argv)
   
   generate(a2, a2 + array_size, [&]{ return n--; }); 
     
-  std::less<int> compare; 
+  less<int> compare; 
  
-  merge_sort<int>(&a2[0], &a2[0] + array_size - 1, compare);
+  algolib::merge_sort<int>(&a2[0], &a2[0] + array_size - 1, compare);
 
-  cout << "\n" <<  "Output of merge sort: " << "\n";
+  cout << "\n------------------" <<  "Output of merge sort: " << "\n";
 
   copy(a2, a2 + array_size, ostream_iterator<int>(cout, ", ")); 
+
+  cout << "-------------------" << endl;
 
   return 0;
 }

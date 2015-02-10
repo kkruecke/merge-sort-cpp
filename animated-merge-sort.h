@@ -7,12 +7,13 @@
 #include <iterator>
 #include <map>
 
+namespace algolib {
+
 class Animator { 
   public:    
     enum section {none, left, right };
     template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
   private:
-
     static  std::map<section, std::string> mapping;
 
     static std::string get_string(section s)
@@ -76,27 +77,44 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator c, int depth, Animator::section sec) 
 {
-    // base case: the range [first, last] can no longer be subdivided.
-    if (first < last) {
+static Iterator_type1 orig_data_struct_first;
+static Iterator_type1 orig_data_struct_last;
 
-        Animator::print_stdout(first, last, depth, sec);
-                
-        int mid = (last - first) / 2; // index of mid point
-        
-        Iterator_type1 mid_iterator = first + mid;
-        Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
+  if (depth == 0) {
 
-        do_merge_sort(first, mid_iterator, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
+    orig_data_struct_first = first;
+    orig_data_struct_last = last;
 
-        do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
-        
-        // merge the two halves
-        do_merge(first, mid_iterator, last, buffer, c, depth);
+  } 
 
-    } else {
+  // base case: the range [first, last] can no longer be subdivided.
+  if (first < last) {
 
-        Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends."));
-    }
+      Animator::print_stdout(first, last, depth, sec);
+              
+      int mid = (last - first) / 2; // index of mid point
+      
+      Iterator_type1 mid_iterator = first + mid;
+      Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
+
+      do_merge_sort(first, mid_iterator, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
+
+      do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
+      
+      // merge the two halves
+      do_merge(first, mid_iterator, last, buffer, c, depth);
+
+      // print out the original data structure to be sorted
+      std::cout << "\nOriginal input: ";
+
+      print_array(orig_data_struct_first, orig_data_struct_last + 1);
+
+      std::cout << "\n" << std::endl;
+
+  } else {
+
+      Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends."));
+  }
 }
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
@@ -177,4 +195,6 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     std::cout << std::endl;
     */
 }
+
+} // end namespace algolib
 #endif
