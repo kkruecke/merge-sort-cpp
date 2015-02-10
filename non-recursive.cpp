@@ -1,3 +1,90 @@
+//-------------
+/*
+From:
+http://www.softwareandfinance.com/Visual_CPP/Merge_Sort_Iterative.html
+*/
+
+
+struct MergePosInfo {
+
+    int left;
+    int mid;
+    int right;
+};
+
+void Merge_Sort_Iterative(int numbers[], int left, int right)
+{
+
+    int mid;
+
+    if (right <= left)
+        return;
+
+    std::vector<std::pair<int, int> > list;
+
+    std::vector<MergePosInfo> mlist;
+
+    list.push_back(std::pair<int, int>(left, right));
+
+    MergePosInfo info;
+
+    while(1) {
+
+        if(list.size() == 0)
+
+            break;
+
+        left = list.back().first;
+
+        right = list.back().second;
+
+        list.pop_back();
+
+        mid = (right + left) / 2;
+
+        if(left < right) {
+
+            info.left = left;
+
+            info.right = right;
+
+            info.mid = mid + 1;
+
+            mlist.push_back(info);
+
+            list.push_back(std::pair<int, int>(left, mid));
+
+            list.push_back(std::pair<int, int>((mid+1), right));
+        }
+    }
+
+    for(int i = mlist.size() - 1; i >= 0; i--) {
+
+        DoMerge(numbers, mlist[i].left, mlist[i].mid, mlist[i].right);
+
+    }
+
+}
+
+void MergeSortHelper(int numbers[], int array_size)
+{
+    Merge_Sort_Iterative(numbers, 0, array_size - 1);
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    int arr[] = { 3, 8, 7, 5, 2, 1, 9, 6, 4 };
+
+    int len = sizeof(arr) / sizeof(arr[0]);
+
+    MergeSortHelper(arr, len);
+
+    for(int i = 0; i < len; i++)
+        std::cout << arr[i] << " ";
+ 
+     return 0;
+}
+//--------------
 // This is the start of an iterative version of merge sort based on C code (below), but not yet begun.
 
 // It merges pairs of two consecutive lists one after another.
