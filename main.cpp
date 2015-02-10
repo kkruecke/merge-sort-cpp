@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <iterator>
 #include <array>
-#include <list>
 
 using namespace std;
 
@@ -54,21 +53,6 @@ int main(int argc, char** argv)
 
   cout << "-------------------" << endl;
 */
-  list<int> lst(32);
- 
-  generate(lst.begin(), lst.end(), [&]{ return n--; }); 
-    
-  less<int> compare; 
- 
-  algolib::merge_sort<int>(lst.begin(), --lst.end(), compare);
-
-  cout << "\n=============== Sort of linked list below ================\n";
-  
-  cout << "\n------------------" <<  "Output of merge sort: " << "\n";
-
-  copy(lst.begin(), lst.end(), ostream_iterator<int>(cout, ", ")); 
-
-  cout << "-------------------" << endl;
 
   return 0;
 }
