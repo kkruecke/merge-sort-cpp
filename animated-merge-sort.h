@@ -67,7 +67,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c)
 {
    // allocate a working buffer for our merges
-   T *temp_buffer = new T[last + 1 - first];
+   T *temp_buffer = new T[last + 1 - first];  //<-- this requires a random access iterator
     
    do_merge_sort(first, last, temp_buffer, c);
     
