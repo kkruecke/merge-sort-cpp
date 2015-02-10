@@ -1,32 +1,130 @@
 /*
- * Non - recursive merge sort
- */
-public static void mergeSort(Object[] orig, Comparator c) { // nonrecursive
-    Object[] in = new Object[orig.length]; // make a new temporary array
-    System.arraycopy(orig,0,in,0,in.length); // copy the input
-    Object[] out = new Object[in.length]; // output array
-    Object[] temp; // temp array reference used for swapping
-    int n = in.length;
-    for (int i=1; i < n; i*=2) { // each iteration sorts all length-2*i runs 
-      for (int j=0; j < n; j+=2*i)  // each iteration merges two length-i pairs
-        merge(in,out,c,j,i); // merge from in to out two length-i runs at j
-      temp = in; in = out; out = temp; // swap arrays for next iteration
-    }
-    // the "in" array contains the sorted array, so re-copy it
-    System.arraycopy(in,0,orig,0,in.length);
-  }
-  protected static void merge(Object[] in, Object[] out, Comparator c, int start, 
-      int inc) { // merge in[start..start+inc-1] and in[start+inc..start+2*inc-1]
-    int x = start; // index into run #1
-    int end1 = Math.min(start+inc, in.length); // boundary for run #1
-    int end2 = Math.min(start+2*inc, in.length); // boundary for run #2
-    int y = start+inc; // index into run #2 (could be beyond array boundary)
-    int z = start; // index into the out array
-    while ((x < end1) && (y < end2)) 
-      if (c.compare(in[x],in[y]) <= 0) out[z++] = in[x++];
-      else out[z++] = in[y++];
-    if (x < end1) // first run didn't finish
-      System.arraycopy(in, x, out, z, end1 - x);
-    else if (y < end2) // second run didn't finish
-      System.arraycopy(in, y, out, z, end2 - y);
-  }
+From: http://www.cs.utep.edu/ofuentes/cs2302/fall11/nonRecursiveMergesort.txt
+*/
+import java.util.*;
+
+public class nonRecursiveMergesort{	
+
+	public static void merge(int [] A, int first, int last){
+	// Preconditions: A[first ... mid] and A[mid+1 ... last] are sorted
+	// Postcondition: A[first ... last] is sorted 
+		int [] temp = new int[last-first+1];
+		if (first<last){
+			int i1 = first;
+			int mid = (first+last)/2;
+			int i2 = mid+1;
+						
+			for(int i=0;i< temp.length;i++){
+				if (i1>mid){
+					temp[i]= A[i2];
+					i2++;
+				}				
+				else 
+					if (i2>last){
+						temp[i]= A[i1];
+						i1++;
+					}
+					else
+						if (A[i1]<A[i2]){
+							temp[i]= A[i1];
+							i1++;
+						}
+						else{
+							temp[i]= A[i2];
+							i2++;
+						}
+			//	System.out.println(i+" "+temp[i]); //for debugging purposes
+			}
+			for(int i=0;i<temp.length;i++)
+				A[first+i]=temp[i];
+		}
+	}
+
+	public static void mergesort(int [] A){
+		Stack<MergesortRecord> stack=new Stack();
+		MergesortRecord m = new MergesortRecord(false, 0, A.length-1);
+		stack.push(m);
+		while (!stack.empty()){
+			/* Debugging code */
+			System.out.println("Stack size is: " + stack.size());
+			System.out.print("Top of stack is: ");
+			stack.peek().print();
+					
+			m=stack.pop();
+			//m.print(); //for debugging purposes
+			if (m.getsorted()){//If first and second halves of array have been sorted, merge them
+				merge(A,m.getfirst(),m.getlast());
+			}
+			else{
+				if (m.getfirst()<m.getlast()){
+					int mid = (m.getfirst()+m.getlast())/2;
+					stack.push(new MergesortRecord(true,m.getfirst(),m.getlast()));
+					stack.push(new MergesortRecord(false,m.getfirst(),mid));
+					stack.push(new MergesortRecord(false,mid+1,m.getlast()));
+				}
+			}
+			System.out.print("Current array is: ");
+			printArray(A); //for debugging purposes	
+			System.out.println();
+		}
+	}
+	
+	public static int [] generateRandomArray(int n, int max){
+		Random generator = new Random();
+		int []randArray = new int[n];
+		for(int i=0;i<n;i++)
+			randArray[i] = generator.nextInt(max);
+		return randArray;
+	}
+	
+	public static void printArray(int [] A){
+		for(int i =0;i<A.length;i++)
+			System.out.print(A[i]+" ");
+		System.out.println();
+	}
+
+	public static void main(String[] args)   {
+		int [] A = {3, 4, 8, 2, 9, 7};
+		//int [] A = generateRandomArray(50,100);
+		//printArray(A);
+		mergesort(A);
+		//printArray(A);
+			
+	}
+}
+
+/***************************************************************************************
+************ Defines Objects to be used by the non-recursive Mergesort routine *********
+************ Programmed by Olac Fuentes                                        *********
+************ Last modified September 12, 2011                                  ********* 
+****************************************************************************************/
+
+import java.util.*;
+
+public class MergesortRecord{	
+	private boolean sorted; //Indicates if the first and second half of the array have already been sorted 
+	private int first;
+	private int last;
+	
+	public MergesortRecord(boolean s, int f, int l){
+		sorted = s;
+		first = f;
+		last = l;
+	}
+
+	public  int getfirst()   {
+			return first;
+	}
+	
+	public boolean getsorted()   {
+			return sorted;
+	}
+	
+	public  int getlast()   {
+			return last;
+	}
+	
+	public void print(){
+		System.out.println(sorted+" "+first+" "+last);
+	}
+}
