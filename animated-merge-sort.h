@@ -105,7 +105,7 @@ static Iterator_type1 orig_data_struct_last;
       do_merge(first, mid_iterator, last, buffer, c, depth);
 
       // print out the original data structure to be sorted
-      std::cout << "\nOriginal input: ";
+      std::cout << "\nOutput so far: ";
 
       print_array(orig_data_struct_first, orig_data_struct_last + 1);
 
