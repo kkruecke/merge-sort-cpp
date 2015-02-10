@@ -18,7 +18,7 @@ int main(int argc, char** argv)
     
   std::less<int> c; 
  
-  cout << "\n=============== Sort of std::array<int, 32> below ================\n";
+  cout << "=============== Sort of std::array<int, 32> below ================\n";
 
   merge_sort<int>(a.begin(), a.end() - 1, c);
 
@@ -45,6 +45,7 @@ int main(int argc, char** argv)
   merge_sort<int>(&a2[0], &a2[0] + array_size - 1, compare);
 
   cout << "\n" <<  "Output of merge sort: " << "\n";
+
   copy(a2, a2 + array_size, ostream_iterator<int>(cout, ", ")); 
 
   return 0;

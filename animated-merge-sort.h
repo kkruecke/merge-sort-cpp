@@ -9,7 +9,6 @@
 
 class Animator { 
   public:    
-    
     enum section {none, left, right };
     template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
   private:
