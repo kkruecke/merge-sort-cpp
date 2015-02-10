@@ -185,15 +185,6 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     print_array(first_extra, first_extra + length);
 
     std::cout << std::endl;
-
-    // print out merged array
-    /*
-    std::cout << std::string("Original input now: ");
-
-    print_array(first_extra, last );
-
-    std::cout << std::endl;
-    */
 }
 
 } // end namespace algolib
