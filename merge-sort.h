@@ -30,30 +30,28 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     if (first < last) {
 
         /*
-         * 1. Divide: Subdivide into left and right halves, saving the indecies of [first, mid] and [mid+1, last] on the stack.
+         * 1. Divide: divide into left and right halves. The indecies of [first, mid] and [mid+1, last] will implicitly be saved
+         *    on the stack.
          */ 
 
-        int mid = (last - first) / 2; // index of mid point
+        int half_distance = (last - first) / 2; // distance to mid point
         
-        Iterator_type1 mid_iterator = first + mid;
-
-        Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
+        Iterator_type1 mid = first + half_distance;
 
         /*
          * Recurse on left half
          */
-        do_merge_sort(first, mid_iterator, buffer, c);    
+        do_merge_sort(first, mid, buffer, c);    
 
         /*
          * Recurse on right half
          */
-        do_merge_sort(mid_iterator_plus1, last, buffer, c);
+        do_merge_sort(mid + 1, last, buffer, c);
 
         /*
-         * 2. Conquer: merge sub arrays into sorted array [first, last]
+         * 2. Conquer: merge sub arrays [first, mid into sorted array [first, last]
          */ 
-        
-        do_merge(first, mid_iterator, last, buffer, c); // merge/sort step
+        do_merge(first, mid, last, buffer, c); // merge/sort step
     }
 }
 

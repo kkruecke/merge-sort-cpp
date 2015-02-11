@@ -92,17 +92,17 @@ static Iterator_type1 orig_data_struct_last;
 
       Animator::print_stdout(first, last, depth, sec);
               
-      int mid = (last - first) / 2; // index of mid point
+
+      int half_distance = (last - first) / 2; // distance to mid point
+        
+      Iterator_type1 mid = first + half_distance;
       
-      Iterator_type1 mid_iterator = first + mid;
-      Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
+      do_merge_sort(first, mid, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
 
-      do_merge_sort(first, mid_iterator, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
-
-      do_merge_sort(mid_iterator_plus1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
+      do_merge_sort(mid + 1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
       
       // merge the two halves
-      do_merge(first, mid_iterator, last, buffer, c, depth);
+      do_merge(first, mid, last, buffer, c, depth);
 
       // print out the original data structure to be sorted
       std::cout << "\nOutput so far: ";
