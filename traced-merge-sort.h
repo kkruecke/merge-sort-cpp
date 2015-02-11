@@ -1,5 +1,5 @@
-#ifndef ANIMATED_MERGE_SORT_H
-#define ANIMATED_MERGE_SORT_H
+#ifndef TRACED_MERGE_SORT_H
+#define TRACED_MERGE_SORT_H
 
 #include <string>
 #include <iostream>

@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include "animated-merge-sort.h" // within algolib namespace
+#include "traced-merge-sort.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
