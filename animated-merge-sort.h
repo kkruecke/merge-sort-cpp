@@ -175,10 +175,10 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     Iterator_type2 start = buffer_start;
 
     Iterator_type2 first_extra = first; 
-   
-    for (Iterator_type1 end = start + length; start != end; ++start) {
+
+    for (Iterator_type1 end = start + length; start != end;) {
         
-        *first++ = *start;
+        *first++ = *start++;
     }
 
     // print out merged array

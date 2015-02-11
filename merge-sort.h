@@ -3,8 +3,7 @@
 
 namespace algolib {
 /*
- * An array iterator, which temp_buffer is, is different potentially of a different type than that the iterator types of parameters first, mid and last--all of
- * which could be different data structures. Therefore two iterator types are needed in the event that the data structure being sorted is not an array.
+ * Two different iterator types might not actually needed. It may be that a random access iterator is always required for both.
  */
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid,
         Iterator_type1 last,
@@ -30,24 +29,37 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
 
-        // subdivide into left and right halves: (first, mid) and (mid+1, last)
+        /*
+         * 1. Divide: Subdivide into left and right halves, saving the indecies of [first, mid] and [mid+1, last] on the stack.
+         */ 
 
         int mid = (last - first) / 2; // index of mid point
         
         Iterator_type1 mid_iterator = first + mid;
+
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
-        
-        do_merge_sort(first, mid_iterator, buffer, c);    // recurse left half
-         
-        do_merge_sort(mid_iterator_plus1, last, buffer, c); // recurse right half
+
+        /*
+         * Repeat on left half
+         */
+        do_merge_sort(first, mid_iterator, buffer, c);    // recurse on left half
+
+        /*
+         * Repeat on right half
+         */
+        do_merge_sort(mid_iterator_plus1, last, buffer, c); // recurse on right half
+
+        /*
+         * 2. Conquer: merge sub arrays into sorted array [first, last]
+         */ 
         
         do_merge(first, mid_iterator, last, buffer, c); // merge/sort step
     }
 }
 
 /*
- * Merges subarrays -- TODO give their intervals here -- into a sorted array in working buffer, buffer_start. Then copy the working buffer back to the segemnt of the original array
- * designated by (first, first + lenght]
+ * Merges subarrays  [first, mid] and [mide + 1, last] into a sorted array in working buffer, buffer_start. Then copies the working buffer 
+ * over the original segement [first, last]
  */
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
@@ -93,11 +105,12 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
          
    // Copy the temp array to the original array
    int length = last + 1 - first;
+
    Iterator_type2 start = buffer_start;
    
-    for (Iterator_type1 end = start + length; start != end; ++start) {
+    for (Iterator_type1 end = start + length; start != end;) {
         
-        *first++ = *start;
+        *first++ = *start++;
     }
 }
 
