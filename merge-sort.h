@@ -45,7 +45,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         do_merge_sort(first, mid_iterator, buffer, c);    
 
         /*
-         * Repeat on right half
+         * Recurse on right half
          */
         do_merge_sort(mid_iterator_plus1, last, buffer, c);
 
@@ -58,7 +58,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
 }
 
 /*
- * Merges subarrays  [first, mid] and [mide + 1, last] into a sorted array in working buffer, buffer_start. Then copies the working buffer 
+ * Merges subarrays  [first, mid] and [mid + 1, last] into a sorted array in working buffer, buffer_start. Then copies the working buffer 
  * over the original segement [first, last]
  */
 
