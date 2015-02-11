@@ -30,20 +30,25 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     // base case: the range [first, last] can no longer be subdivided.
     if (first < last) {
 
+        // subdivide into left and right halves: (first, mid) and (mid+1, last)
+
         int mid = (last - first) / 2; // index of mid point
         
         Iterator_type1 mid_iterator = first + mid;
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
         
-        do_merge_sort(first, mid_iterator, buffer, c);    // sort left half
+        do_merge_sort(first, mid_iterator, buffer, c);    // recurse left half
          
-        do_merge_sort(mid_iterator_plus1, last, buffer, c); // sort right half
+        do_merge_sort(mid_iterator_plus1, last, buffer, c); // recurse right half
         
-        // merge the two halves
-        do_merge(first, mid_iterator, last, buffer, c);
-        
+        do_merge(first, mid_iterator, last, buffer, c); // merge/sort step
     }
 }
+
+/*
+ * Merges subarrays -- TODO give their intervals here -- into a sorted array in working buffer, buffer_start. Then copy the working buffer back to the segemnt of the original array
+ * designated by (first, first + lenght]
+ */
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
                                                                   Iterator_type2 buffer_start, Comparator compare)
@@ -86,7 +91,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         *buffer_cursor = *first2;
     }
          
-   // copy the temp array to the original array
+   // Copy the temp array to the original array
    int length = last + 1 - first;
    Iterator_type2 start = buffer_start;
    
