@@ -26,7 +26,7 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator c) 
 {
-    // base case: the range [first, last] can no longer be subdivided.
+    // Base case: the range [first, last] can no longer be subdivided, i.e., it is of length one.
     if (first < last) {
 
         /*
@@ -40,14 +40,14 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         Iterator_type1 mid_iterator_plus1 = mid_iterator + 1;
 
         /*
-         * Repeat on left half
+         * Recurse on left half
          */
-        do_merge_sort(first, mid_iterator, buffer, c);    // recurse on left half
+        do_merge_sort(first, mid_iterator, buffer, c);    
 
         /*
          * Repeat on right half
          */
-        do_merge_sort(mid_iterator_plus1, last, buffer, c); // recurse on right half
+        do_merge_sort(mid_iterator_plus1, last, buffer, c);
 
         /*
          * 2. Conquer: merge sub arrays into sorted array [first, last]
