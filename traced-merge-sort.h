@@ -55,12 +55,15 @@ template<typename Iterator> void print_array(Iterator start, Iterator end)
 /*
  * Two iterator types are needed. The data structure being sorted may not an array.
  */
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid,
         Iterator_type1 last,
         Iterator_type2 buffer_start,
         Comparator C, int depth);
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
+// merge_sort() is overloaded
+template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c);
+
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all);
 
 
@@ -69,12 +72,12 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
    // allocate a working buffer for our merges
    T *temp_buffer = new T[last + 1 - first];  //<-- this requires a random access iterator
     
-   do_merge_sort(first, last, temp_buffer, c);
+   merge_sort(first, last, temp_buffer, c);
     
    delete [] temp_buffer;
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator c, int depth, Animator::section sec) 
 {
 static Iterator_type1 orig_data_struct_first;
@@ -91,18 +94,21 @@ static Iterator_type1 orig_data_struct_last;
   if (first < last) {
 
       Animator::print_stdout(first, last, depth, sec);
-              
 
+      /*
+       * 1. Divide data structure in a left, first half and second or right half.
+       */ 
       int half_distance = (last - first) / 2; // distance to mid point
         
       Iterator_type1 mid = first + half_distance;
       
-      do_merge_sort(first, mid, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
+      algolib::merge_sort(first, mid, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
 
-      do_merge_sort(mid + 1, last, buffer, c, depth + 1, Animator::section::right); // recursively subdivide right half
+      // when left half recursion end, recursively subdivide right half (of prior array on stack).
+      algolib::merge_sort(mid + 1, last, buffer, c, depth + 1, Animator::section::right);
       
       // merge the two halves
-      do_merge(first, mid, last, buffer, c, depth);
+      algolib::merge(first, mid, last, buffer, c, depth);
 
       // print out the original data structure to be sorted
       std::cout << "\nOutput so far: ";
@@ -117,7 +123,7 @@ static Iterator_type1 orig_data_struct_last;
   }
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
                                                                   Iterator_type2 buffer_start, Comparator compare, int depth)
 {
     Iterator_type1 first1 = first;

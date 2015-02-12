@@ -3,14 +3,14 @@
 
 namespace algolib {
 /*
- * Two different iterator types might not actually needed. It may be that a random access iterator is always required for both.
+ * Two different iterator types might not actually needed. It may be that a random access iterator type is always required for both.
  */
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid,
         Iterator_type1 last,
         Iterator_type2 buffer_start,
         Comparator C);
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator C);
 
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
@@ -18,19 +18,19 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
    // allocate a working buffer for our merges
    T *temp_buffer = new T[last + 1 - first];
     
-   do_merge_sort(first, last, temp_buffer, C);
+   merge_sort(first, last, temp_buffer, C);
     
    delete [] temp_buffer;
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge_sort(Iterator_type1 first, Iterator_type1 last,
                                                                   Iterator_type2 buffer, Comparator c) 
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
     if (first < last) {
 
         /*
-         * 1. Divide into left and right halves. 
+         * 1. Divide data structure in a left, first half and second or right half.
          */ 
 
         int half_distance = (last - first) / 2; 
@@ -38,19 +38,20 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         Iterator_type1 mid = first + half_distance;
 
         /*
-         * Recurse on left half. Each descent implictly saves the its corresponding indecies of [first, mid] and [mid+1, last] one the stack.
+         * Recurse passing as input the left half.
          */
-        do_merge_sort(first, mid, buffer, c);    
+        algolib::merge_sort(first, mid, buffer, c);    
 
         /*
-         * Recurse on right half
+         * When left half recursion end, recurse passing as input on right half of [first, last], which is [mid + , last]. 
+         * Note: Both descents--left and right--implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
          */
-        do_merge_sort(mid + 1, last, buffer, c);
+        algolib::merge_sort(mid + 1, last, buffer, c);
 
         /*
-         * 2. Conquer: merge sub arrays [first, mid into sorted array [first, last]
+         * 2. Conquer by merging the sub arrays [first, mid] and [first, last] into a sorted array in [first, last]
          */ 
-        do_merge(first, mid, last, buffer, c); // merge/sort step
+        algolib::merge(first, mid, last, buffer, c); // merge/sort step
     }
 }
 
@@ -59,7 +60,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
  * over the original segement [first, last]
  */
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
+template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
                                                                   Iterator_type2 buffer_start, Comparator compare)
 {
     Iterator_type1 first1 = first;
