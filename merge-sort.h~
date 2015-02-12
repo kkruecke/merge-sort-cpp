@@ -30,15 +30,16 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     if (first < last) {
 
         /*
-         * 1. Divide into left and right halves. 
+         * 1. Divide into left and right halves. The left indecies of [first, mid] and the right indecies [mid+1, last] are implicitly be saved
+         *    on the stack.
          */ 
 
-        int half_distance = (last - first) / 2; 
+        int half_distance = (last - first) / 2; // distance to mid point
         
         Iterator_type1 mid = first + half_distance;
 
         /*
-         * Recurse on left half. Each descent implictly saves the its corresponding indecies of [first, mid] and [mid+1, last] one the stack.
+         * Recurse on left half
          */
         do_merge_sort(first, mid, buffer, c);    
 
