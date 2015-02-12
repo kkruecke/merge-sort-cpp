@@ -11,7 +11,7 @@ namespace algolib {
 
 class Animator { 
   public:    
-    enum section {all, left, right };
+    enum section {none, left, right };
     template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
   private:
     static  std::map<section, std::string> mapping;
@@ -22,7 +22,7 @@ class Animator {
     } 
 };
        
-std::map<Animator::section, std::string>  Animator::mapping { {all, std::string("  all")}, 
+std::map<Animator::section, std::string>  Animator::mapping { {none, std::string("  all")}, 
                          {left, std::string(" left")},
                          {right, std::string("right")}
                             };
@@ -61,7 +61,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
         Comparator C, int depth);
 
 template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void do_merge_sort(Iterator_type1 first, Iterator_type1 last,
-                                                                  Iterator_type2 buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all);
+                                                                  Iterator_type2 buffer, Comparator C, int depth = 0, Animator::section sec = Animator::none);
 
 
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c)
