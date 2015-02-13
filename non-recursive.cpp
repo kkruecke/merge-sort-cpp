@@ -4,6 +4,47 @@ From:
 http://www.softwareandfinance.com/Visual_CPP/Merge_Sort_Iterative.html
 */
 
+#include <iostream>
+#include <queue>
+#include <vector>
+
+void DoMerge(int numbers[], int left, int mid, int right)
+{
+    int temp[25];
+
+    auto left_end = (mid - 1);
+
+    auto tmp_pos = left;
+
+    auto num_elements = (right - left + 1);
+
+    while ((left <= left_end) && (mid <= right)) {
+
+        if (numbers[left] <= numbers[mid]) {
+
+            temp[tmp_pos++] = numbers[left++];
+
+        }  else {
+
+            temp[tmp_pos++] = numbers[mid++];
+        }
+    }
+
+    while (left <= left_end) {
+
+        temp[tmp_pos++] = numbers[left++];
+    }
+
+    while (mid <= right)  {
+
+        temp[tmp_pos++] = numbers[mid++];
+    }
+
+    for (auto i=0; i < num_elements; i++) {
+
+        numbers[right--] = temp[right];
+    }
+}
 
 struct MergePosInfo {
 
