@@ -55,16 +55,15 @@ template<typename Iterator> void print_array(Iterator start, Iterator end)
 /*
  * Two iterator types are needed. The data structure being sorted may not an array.
  */
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid,
-        Iterator_type1 last,
-        Iterator_type2 buffer_start,
+template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
+        Iterator buffer_start,
         Comparator C, int depth);
 
 // merge_sort() is overloaded
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c);
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge_sort(Iterator_type1 first, Iterator_type1 last,
-                                                                  Iterator_type2 buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all);
+template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
+                                                                  Iterator buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all);
 
 
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c)
@@ -77,11 +76,11 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
    delete [] temp_buffer;
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge_sort(Iterator_type1 first, Iterator_type1 last,
-                                                                  Iterator_type2 buffer, Comparator c, int depth, Animator::section sec) 
+template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
+                                                                  Iterator buffer, Comparator c, int depth, Animator::section sec) 
 {
-static Iterator_type1 orig_data_struct_first;
-static Iterator_type1 orig_data_struct_last;
+static Iterator orig_data_struct_first;
+static Iterator orig_data_struct_last;
 
   if (depth == 0) {
 
@@ -100,7 +99,7 @@ static Iterator_type1 orig_data_struct_last;
        */ 
       int half_distance = (last - first) / 2; // distance to mid point
         
-      Iterator_type1 mid = first + half_distance;
+      Iterator mid = first + half_distance;
       
       algolib::merge_sort(first, mid, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
 
@@ -123,14 +122,14 @@ static Iterator_type1 orig_data_struct_last;
   }
 }
 
-template<typename Iterator_type1, typename Iterator_type2, typename Comparator> static void merge(Iterator_type1 first, Iterator_type1 mid, Iterator_type1 last,
-                                                                  Iterator_type2 buffer_start, Comparator compare, int depth)
+template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
+                                                                  Iterator buffer_start, Comparator compare, int depth)
 {
-    Iterator_type1 first1 = first;
-    Iterator_type1 last1 = mid;
+    Iterator first1 = first;
+    Iterator last1 = mid;
     
-    Iterator_type1 first2 = mid + 1;
-    Iterator_type1 last2 = last;
+    Iterator first2 = mid + 1;
+    Iterator last2 = last;
     
     /*
      * Print out input arrays to be merged....
@@ -152,7 +151,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
      * While both sub-arrays are not empty, copy the smaller item into the 
      * temporary array buffer.
      */
-    Iterator_type2 buffer_cursor = buffer_start;
+    Iterator buffer_cursor = buffer_start;
     
     for (; first1 <= last1 && first2 <= last2; ++buffer_cursor) {
         
@@ -180,11 +179,11 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
          
     // copy the temp array to the original array
     int length = last + 1 - first;
-    Iterator_type2 start = buffer_start;
+    Iterator start = buffer_start;
 
-    Iterator_type2 first_extra = first; 
+    Iterator first_extra = first; 
 
-    for (Iterator_type1 end = start + length; start != end;) {
+    for (Iterator end = start + length; start != end;) {
         
         *first++ = *start++;
     }
