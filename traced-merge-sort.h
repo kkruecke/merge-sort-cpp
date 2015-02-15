@@ -136,13 +136,15 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
      * Print out input arrays to be merged....
      */
 
-    std::cout << "Merging at depth " << depth << " :";
+    std::cout << "Merging at depth " << depth << " : left half";
 
     print_array(first1, last1 +  1);
 
+    std::cout << " right half";
+
     print_array(first2, last2 +  1);
 
-    std::cout <<  std::string("  ---> ");
+    std::cout <<  std::string("  ---> ") << "\n                    ";
 
     int index = 0;
     
@@ -190,7 +192,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
     // print out merged array
     print_array(first_extra, first_extra + length);
 
-    std::cout << std::endl;
+    std::cout << std::endl << "Exiting depth " << depth << " <----" << std::endl; 
 }
 
 } // end namespace algolib
