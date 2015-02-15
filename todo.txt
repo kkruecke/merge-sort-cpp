@@ -1,2 +1,6 @@
-Implement non-recursive version. Start by testing iterative1.cpp, to see that it works. Then comment it in order to understand it.
-Then, once I understand it, think about to possilby use a stack<> or to implement it another way.
+Implement non-recursive version. Using the explanation at
+
+http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/7-Sort/merge-sort5.html
+
+It explains that the recursive, effectively sorts the adjacent one-lenth subarrays. Then merges the results, the adjacent two-element arrays. Then
+merges the adjacent length four arrays, then the length "two times the previous length" until ?????
