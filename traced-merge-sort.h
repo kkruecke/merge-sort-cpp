@@ -136,7 +136,7 @@ template<typename Iterator_type1, typename Iterator_type2, typename Comparator> 
      * Print out input arrays to be merged....
      */
 
-    std::cout << "merging : ";
+    std::cout << "Merging at depth " << depth << " :";
 
     print_array(first1, last1 +  1);
 
