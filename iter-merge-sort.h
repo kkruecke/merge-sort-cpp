@@ -20,7 +20,9 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 
 
 //--template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Iterator first, Iterator last, Comparator comparer)
-
+/*
+ * Original source code is at http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
+ */
 template<typename T, Comparator comparer> T *merge_sort(T *array, int first, int last, Comparator comparer)
 {
     auto length = last + 1 - first;
