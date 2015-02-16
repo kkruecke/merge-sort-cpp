@@ -23,14 +23,14 @@ template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Itera
 
     T  *temp_buffer = new decltype(*first)[length];
 
-    Iterator first_tmp = first;
+    // TODO: 1. Describe the operation of the original code in thorough comments. Note: This may not be the original code. See the
+    // URL above.
 
-    for (int i = 1; i <= length / 2 + 1; i *= 2)  {
+    for (int i = 1; i <= length / 2 + 1; i *= 2)  { // <-- 2. TODO: Change to iterators
           
         /*
-         * TODO: Use calculated iterators in the inner loop instead of indecies 
+         * 2. TODO: Use calculated iterators in the inner loop instead of indecies 
          */
-
         for (int j = i; j < length; j += 2 * i) {
             
             /*
