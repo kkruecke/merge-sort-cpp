@@ -1,6 +1,8 @@
 #ifndef ITER_MERGE_SORT_H
 #define ITER_MERGE_SORT_H
 
+#include <algorithm>
+
 /*
  * For an excellent explanation of this algorithm see:
    http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/7-Sort/merge-sort5.html
@@ -36,7 +38,8 @@ template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Itera
              *
              */
 
-            do_merge(a, j - i, j, Math.Min(j + i, array.Length), temp_buffer, comparer);
+            //--algo::merge(a, j - i, j, Math.Min(j + i, array.Length), temp_buffer, comparer);
+            algo::merge(a, j - i, j, std::min(j + i, length), temp_buffer, comparer);
         }
     }
  
