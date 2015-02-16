@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+// TODO: First just get it running for arrays using indecies, then, convert it to use iterators.
+
 /*
  * For an excellent explanation of this algorithm see:
    http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/7-Sort/merge-sort5.html
@@ -17,20 +19,16 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         Comparator C);
 
 
-template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Iterator first, Iterator last, Comaparator comparer)
+//--template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Iterator first, Iterator last, Comparator comparer)
+
+template<typename T, Comparator comparer> T *merge_sort(T *array, int first, int last, Comparator comparer)
 {
     auto length = last + 1 - first;
 
     T  *temp_buffer = new T[length];
 
-    // TODO: 1. Describe the operation of the original code in thorough comments. Note: This may not be the original code. See the
-    // URL above.
-
-    for (int width = 1; i <= length / 2 + 1; width *= 2)  { // <-- 2. TODO: Change to iterators
+    for (int width = 1; i <= length / 2 + 1; width *= 2)  { /
           
-        /*
-         * 2. TODO: Use calculated iterators in the inner loop instead of indecies 
-         */
         for (int i = 0; i < length; i += 2 * width) {
             
             /*
@@ -49,7 +47,7 @@ template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Itera
 
             int     end = std::min(tmp_end, length - 1); 
 
-            algo::merge(start, mid, end, temp_buffer, comparer);
+            algo::merge(array, start, mid, end, temp_buffer, comparer);
         }
     }
  
@@ -61,14 +59,14 @@ template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Itera
  * over the original segement [first, last]
  */
 
-template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare)
+template<typename T, typename Comparator> static void merge(T *array, int first, int mid, int last,
+                                                                  T *buffer_start, Comparator compare)
 {
-    Iterator first1 = first;
-    Iterator last1 = mid;
+    int first1 = first;
+    int last1 = mid;
     
-    Iterator first2 = mid + 1;
-    Iterator last2 = last;
+    int first2 = mid + 1;
+    int last2 = last;
         
     int index = 0;
     
@@ -76,7 +74,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
      * While both sub-arrays are not empty, copy the smaller item into the 
      * temporary array buffer.
      */
-    Iterator buffer_cursor = buffer_start;
+    int buffer_cursor = buffer_start;
     
     for (; first1 <= last1 && first2 <= last2; ++buffer_cursor) {
         
@@ -105,9 +103,9 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
    // Copy the temp array to the original array
    int length = last + 1 - first;
 
-   Iterator start = buffer_start;
+   int start = buffer_start;
    
-    for (Iterator end = start + length; start != end;) {
+    for (int end = start + length; start != end;) {
         
         *first++ = *start++;
     }
