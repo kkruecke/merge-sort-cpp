@@ -21,7 +21,44 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 
 //--template<typename Iterator, typename T, Comparator comparer> T *merge_sort(Iterator first, Iterator last, Comparator comparer)
 /*
- * Original source code is at http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
+ * Code below from http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
+ *
+public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
+{
+    for (int i = 1; i <= array.Length / 2 + 1; i *= 2) {
+
+        for (int j = i; j < array.Length; j += 2 * i)  {
+
+            Merge(array, j - i, j, Math.Min(j + i, array.Length), comparer);
+        }
+    }
+ 
+    return array;
+}
+
+static void Merge(T[] array, int start, int middle, int end, IComparer<T> comparer)
+{
+    T[] merge = new T[end - start];
+
+    int l = 0, r = 0, i = 0;
+
+    while (l < middle - start && r < end - middle)     {
+
+        merge[i++] = comparer.Compare(array[start + l], array[middle + r]) < 0 ? array[start + l++] : array[middle + r++];
+    }
+ 
+    while (r < end - middle) {
+
+         merge[i++] = array[middle + r++];
+    }
+ 
+    while (l < middle - start) {
+
+         merge[i++] = array[start + l++];
+    }
+ 
+    Array.Copy(merge, 0, array, start, merge.Length);
+}
  */
 template<typename T, Comparator comparer> T *merge_sort(T *array, int first, int last, Comparator comparer)
 {
