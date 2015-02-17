@@ -43,7 +43,7 @@ static void Merge(T[] array, int start, int middle, int end, IComparer<T> compar
     int l = 0, r = 0, i = 0;
 
     while (l < middle - start && r < end - middle)     {
-
+         
         merge[i++] = comparer.Compare(array[start + l], array[middle + r]) < 0 ? array[start + l++] : array[middle + r++];
     }
  
@@ -59,6 +59,38 @@ static void Merge(T[] array, int start, int middle, int end, IComparer<T> compar
  
     Array.Copy(merge, 0, array, start, merge.Length);
 }
+
+// converter version
+
+template<typename T, typename Comparator> void Merge(T[] array, int start, int middle, int end, T *temp_buffer,  Comparator compare)
+{
+    int left = 0, right = 0, i = 0;
+
+    while (left < middle - start && right < end - middle)     {
+         
+        if ( compare(array[start + l], array[middle + right]) ) {
+
+            temp_buffer[i++] = array[start + l++];
+
+        } else { 
+
+            temp_buffer[i++] = array[middle + right++];
+        }
+    }
+ 
+    while (right < end - middle) {
+
+         temp_buffer[i++] = array[middle + right++];
+    }
+ 
+    while (left < middle - start) {
+
+         temp_buffer[i++] = array[start + l++];
+    }
+ 
+    Array.Copy(temp_buffer, 0, array, start, temp_buffer.Length);
+}
+
  */
 template<typename T, Comparator comparer> T *merge_sort(T *array, int first, int last, Comparator comparer)
 {
