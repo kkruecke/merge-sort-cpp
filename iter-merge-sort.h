@@ -77,6 +77,43 @@ static void Merge(T[] array, int start, int middle, int end, IComparer<T> compar
     Array.Copy(merge, 0, array, start, merge.Length);
 }
 */
+// Converted version
+template<typename T, typename Comparator > static void iter_work_buffer(T *input, int start, int middle, int end, Comparator comparer)
+{
+    auto length = end - sart;
+
+    T *work_buffer = new T[length];
+
+    auto left = 0, right = 0, i = 0;
+
+    while (left < middle - start && right < end - middle)     {
+         
+        if ( comparer(input[start + left], input[middle + right]) ) {
+
+           work_buffer[i++] = input[start + left++];
+
+        } else {  
+
+            work_buffer[i++] = input[middle + right++];
+
+        }
+    }
+ 
+    while (right < end - middle) {
+
+         work_buffer[i++] = input[middle + right++];
+    }
+ 
+    while (left < middle - start) {
+
+         work_buffer[i++] = input[start + left++];
+    }
+ 
+    std::copy(work_buffer, work_buffer + length, array);
+
+    delete [] work_buffer;
+}
+
 
 } // end namespace
 #endif
