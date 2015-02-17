@@ -5,6 +5,7 @@
 #include <iostream>
 #include <functional>
 #include <iterator>
+#include <algorithm>
 #include <map>
 
 namespace algolib {
@@ -69,7 +70,8 @@ template<typename Iterator, typename Comparator> static void merge_sort(Iterator
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c)
 {
    // allocate a working buffer for our merges
-   auto temp_buffer = new T[last + 1 - first];  //<-- Note: this requires a random access iterator
+   auto length = last + 1 - first;    //<-- Note: this requires a random access iterator
+   auto temp_buffer = new T[length];  
     
    merge_sort(first, last, temp_buffer, c);
     
@@ -176,7 +178,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         
         *buffer_cursor = *first2;
     }
-         
+           
     // copy the temp array to the original array
     int length = last + 1 - first;
     Iterator start = buffer_start;
@@ -187,11 +189,6 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         
         *first++ = *start++;
     }
-
-    // print out merged array
-    print_array(first_extra, first_extra + length);
-
-    std::cout << std::endl << "Exiting depth " << depth << " <----" << std::endl; 
 }
 
 } // end namespace algolib
