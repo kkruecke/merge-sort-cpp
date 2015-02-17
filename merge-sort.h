@@ -20,6 +20,8 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
     
    merge_sort(first, last, temp_buffer, C);
     
+   // TODO: Copy the temp array to the original array
+
    delete [] temp_buffer;
 }
 
@@ -100,7 +102,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         
         *buffer_cursor = *first2;
     }
-         
+   /*      
    // Copy the temp array to the original array
    int length = last + 1 - first;
 
@@ -110,6 +112,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         
         *first++ = *start++;
     }
+    */
 }
 
 } // end namespace algolib
