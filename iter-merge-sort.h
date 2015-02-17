@@ -45,7 +45,7 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
          */  
         for (int start = width; start < length; width += 2 * width)  {
 
-            iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
+            algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
         }
     }
  
