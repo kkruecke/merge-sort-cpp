@@ -34,14 +34,18 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
 {
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2 in size, starting 
-     * with 2 to the first, then 2 to the second, 2 to the third and so on. The number of iteration is:
-     * log base 2(length) rounded up. 
+     * with size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
+     * 
+     *   log base 2(length) rounded up. 
      */
     for (int width = 1; width <= length / 2 + 1; width *= 2) {
+        
+        /*
+         * merge adjacent subarrays of size width
+         */  
+        for (int start = width; start < length; width += 2 * width)  {
 
-        for (int j = width; j < length; j += 2 * width)  {
-
-            iter_merge(input, j - width, j, Math.Min(j + i, input.Length), comparer); // TODO: convert this line
+            iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
         }
     }
  
