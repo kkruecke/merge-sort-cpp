@@ -2,7 +2,6 @@
 #define MERGE_SORT_H
 
 #include <algorithm>
-#include <iostream> // <-- for debug-only purposes
 
 namespace algolib {
 /*
@@ -155,7 +154,7 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
 
         for (int start = width; start < length; start += 2 * width)  { // (2 * width) == combined ength of both subarrays.
 
-            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << " start = " << start << "." << std::endl;
+            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << " start - width = " << start - width << "." << std::endl;
 
             algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
         }
@@ -189,7 +188,7 @@ static void Merge(T[] array, int start, int middle, int end, IComparer<T> compar
     Array.Copy(merge, 0, array, start, merge.Length);
 }
 */
-// Converted version
+// Converted version of above function
 template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer)
 {
     auto length = end - start;
@@ -221,7 +220,15 @@ template<typename T, typename Comparator > static void iter_merge(T *input, int 
          work_buffer[i++] = input[start + left++];
     }
  
-    std::copy(work_buffer, work_buffer + length, input);
+    /* Debugging code:
+    std::copy(work_buffer, work_buffer + length, input + start); // copy to start
+
+    std::cout << std::string("\nThis the current input array: ");
+
+    std::copy(input, input + 32, std::ostream_iterator<decltype(*input)>(std::cout, ", "));
+
+    std::cout << std::endl;
+    */
 
     delete [] work_buffer;
 }
