@@ -2,6 +2,7 @@
 #define MERGE_SORT_H
 
 #include <algorithm>
+#include <iostream> // <-- for debug-only purposes
 
 namespace algolib {
 /*
@@ -150,8 +151,8 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
         /*
          * merge adjacent subarrays of size width
          */  
-        for (int start = width; start < length; width += 2 * width)  { // <-- this looks wrong.
-
+        for (int start = width; start < length; width += 2 * width)  { // (2 * width) == combined ength of both subarrays.
+            std::cout << "\n got here " << std::endl;
             algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
         }
     }

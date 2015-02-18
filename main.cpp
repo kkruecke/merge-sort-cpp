@@ -11,9 +11,12 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+  int n;
+
+ /*
   array<int, 32> a;
 
-  int n = a.size();
+  n = a.size();
 
   generate(a.begin(), a.end(), [&]{ return n--; }); 
     
@@ -34,7 +37,7 @@ int main(int argc, char** argv)
 // Sort built-in array using iterative merge sort
 
   cout << "\n=============== Sort of built-int array below ================\n";
-  
+  */
   int a2[32]; 
 
   n = 32;
