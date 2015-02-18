@@ -2,5 +2,9 @@ Implement non-recursive version. Using the explanation at
 
 http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/7-Sort/merge-sort5.html
 
-It explains that the recursive, effectively sorts the adjacent one-lenth subarrays. Then merges the results, the adjacent two-element arrays. Then
-merges the adjacent length four arrays, then the length "two times the previous length" until ?????
+It explains that the recursive, effectively sorts the adjacent one-lenth subarrays. Then merges the results, the adjacent two-element arrays, the adjacent length
+four arrays, and so on, always increasing the subarray width by twice is prior value.
+
+An another example implementation:
+
+

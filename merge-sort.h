@@ -117,7 +117,8 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 }
 
 /*
- *         Iterative version of Merge Sort 
+ * Iterative version of Merge Sort 
+ * ===============================
  *
  * Code below from http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
  *
@@ -151,8 +152,11 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
         /*
          * merge adjacent subarrays of size width
          */  
-        for (int start = width; start < length; width += 2 * width)  { // (2 * width) == combined ength of both subarrays.
-            std::cout << "\n got here " << std::endl;
+
+        for (int start = width; start < length; start += 2 * width)  { // (2 * width) == combined ength of both subarrays.
+
+            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << " start = " << start << "." << std::endl;
+
             algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
         }
     }
