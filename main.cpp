@@ -1,6 +1,5 @@
 #include <cstdlib>
-//--#include "traced-merge-sort.h" // within algolib namespace
-#include "merge-sort.h" // within algolib namespace
+#include "traced-merge-sort.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
@@ -11,12 +10,9 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-  int n;
-
- /*
   array<int, 32> a;
 
-  n = a.size();
+  auto n = a.size();
 
   generate(a.begin(), a.end(), [&]{ return n--; }); 
     
@@ -32,12 +28,10 @@ int main(int argc, char** argv)
 
   cout << endl;
 
-  //return 0;
-
 // Sort built-in array using iterative merge sort
 
   cout << "\n=============== Sort of built-int array below ================\n";
-  */
+  
   int a2[32]; 
 
   n = 32;

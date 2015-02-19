@@ -119,23 +119,10 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
  * Iterative version of Merge Sort 
  * ===============================
  *
- * Code below from http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
- *
-public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
-{
-    for (int i = 1; i <= array.Length / 2 + 1; i *= 2) {
-
-        for (int j = i; j < array.Length; j += 2 * i)  {
-
-            Merge(array, j - i, j, Math.Min(j + i, array.Length), comparer);
-        }
-    }
- 
-    return array;
-}
+ * Code below is a convert C++11 version of this java code:
+ * http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
 */
 
-// Function above converted by Kurt
 template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer); // fwd ref.
 
 template<typename T, typename Comparator> T *iter_merge_sort(T *input, int length, Comparator comparer)
@@ -163,32 +150,6 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
     return input;
 }
 
-/*
-static void Merge(T[] array, int start, int middle, int end, IComparer<T> comparer)
-{
-    T[] merge = new T[end - start];
-
-    int l = 0, r = 0, i = 0;
-
-    while (l < middle - start && r < end - middle)     {
-         
-        merge[i++] = comparer.Compare(array[start + l], array[middle + r]) < 0 ? array[start + l++] : array[middle + r++];
-    }
- 
-    while (r < end - middle) {
-
-         merge[i++] = array[middle + r++];
-    }
- 
-    while (l < middle - start) {
-
-         merge[i++] = array[start + l++];
-    }
- 
-    Array.Copy(merge, 0, array, start, merge.Length);
-}
-*/
-// Converted version of above function
 template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer)
 {
     auto length = end - start;
@@ -220,7 +181,6 @@ template<typename T, typename Comparator > static void iter_merge(T *input, int 
          work_buffer[i++] = input[start + left++];
     }
  
-    /* Debugging code:
     std::copy(work_buffer, work_buffer + length, input + start); // copy to start
 
     std::cout << std::string("\nThis the current input array: ");
@@ -228,7 +188,6 @@ template<typename T, typename Comparator > static void iter_merge(T *input, int 
     std::copy(input, input + 32, std::ostream_iterator<decltype(*input)>(std::cout, ", "));
 
     std::cout << std::endl;
-    */
 
     delete [] work_buffer;
 }
