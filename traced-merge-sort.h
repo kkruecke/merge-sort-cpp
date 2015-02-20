@@ -211,11 +211,13 @@ public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
 }
 */
 
-// Function above converted by Kurt
-template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer); // fwd ref.
+// Function above converted to C++11
+template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer, T *work_buffer); // fwd ref.
 
 template<typename T, typename Comparator> T *iter_merge_sort(T *input, int length, Comparator comparer)
 {
+    T *work_buffer = new T[length]; 
+
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2 in size, starting 
      * with size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
@@ -230,12 +232,15 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
 
         for (int start = width; start < length; start += 2 * width)  { // (2 * width) == combined ength of both subarrays.
 
-            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << " start - width = " << start - width << "." << std::endl;
+            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << "; start = " << start << "; start - width = " << start - width << "." << std::endl;
 
-            algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
+            //--algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
+            algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer, work_buffer); 
         }
     }
- 
+    
+    delete [] work_buffer;
+    
     return input;
 }
 
@@ -264,49 +269,44 @@ static void Merge(T[] array, int start, int middle, int end, IComparer<T> compar
     Array.Copy(merge, 0, array, start, merge.Length);
 }
 */
-// Converted version of above function
-template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer)
+// C++11 version of above function
+template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer, T *work_buffer)
 {
     auto length = end - start;
-
-    T *work_buffer = new T[length];
-
-    auto left = 0, right = 0, i = 0;
+    
+    auto left = 0, right = 0, current = 0;
 
     while (left < middle - start && right < end - middle)     {
          
         if ( comparer(input[start + left], input[middle + right]) ) {
 
-           work_buffer[i++] = input[start + left++];
+           work_buffer[current++] = input[start + left++];
 
         } else {  
 
-            work_buffer[i++] = input[middle + right++];
+            work_buffer[current++] = input[middle + right++];
 
         }
     }
  
     while (right < end - middle) {
 
-         work_buffer[i++] = input[middle + right++];
+         work_buffer[current++] = input[middle + right++];
     }
  
     while (left < middle - start) {
 
-         work_buffer[i++] = input[start + left++];
+         work_buffer[current++] = input[start + left++];
     }
  
-    /* Debugging code:
     std::copy(work_buffer, work_buffer + length, input + start); // copy to start
 
-    std::cout << std::string("\nThis the current input array: ");
+    std::cout << std::string("\nThe currents the current input array: ");
 
+    // TODO: Remove hardcoded 32.
     std::copy(input, input + 32, std::ostream_iterator<decltype(*input)>(std::cout, ", "));
 
     std::cout << std::endl;
-    */
-
-    delete [] work_buffer;
 }
 
 

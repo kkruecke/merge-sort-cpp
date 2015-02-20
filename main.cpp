@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 
 // Sort built-in array using iterative merge sort
 
-  cout << "\n=============== Sort of built-int array below ================\n";
+  cout << "\n=============== Sort of built-int array below ================\n" << endl;
   
   int a2[32]; 
 
@@ -44,11 +44,11 @@ int main(int argc, char** argv)
  
   algolib::iter_merge_sort(&a2[0], array_size, compare);
 
-  cout << "\n------------------" <<  "Output of merge sort: " << "\n";
+  cout << "\n------------------\n" <<  "Output of iterative merge sort: " << "\n";
 
   copy(a2, a2 + array_size, ostream_iterator<int>(cout, ", ")); 
 
-  cout << "-------------------" << endl;
+  cout << endl;
 
   return 0;
 }
