@@ -122,12 +122,16 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
  * Code below is a convert C++11 version of this java code:
  * http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
 */
-// fwd ref.
-template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer, T * work_buffer); 
+// Fwd ref.
+template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
+                              T *work_buffer); 
 
-template<typename T, typename Comparator> T *iter_merge_sort(T *input, int length, Comparator comparer)
+template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer)
 {
+    auto length = last + 1 - first;
+
     T *work_buffer = new T[length]; 
+
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2 in size, starting 
      * with size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
@@ -142,16 +146,16 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
 
         for (int start = width; start < length; start += 2 * width)  { // (2 * width) == sum of lengths of both subarrays.
 
-            algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer, work_buffer); 
+            algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
         }
     }
     
     delete [] work_buffer;
     
-    return input;
+    return first;
 }
 
-template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer, T* work_buffer)
+template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end, Comparator comparer, T *work_buffer)
 {
     auto length = end - start;
 

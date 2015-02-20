@@ -211,11 +211,15 @@ public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
 }
 */
 
+// Fwd reference
 // Function above converted to C++11
-template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer, T *work_buffer); // fwd ref.
+template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
+                              T *work_buffer); 
 
-template<typename T, typename Comparator> T *iter_merge_sort(T *input, int length, Comparator comparer)
+template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer)
 {
+    auto length = last + 1 - first;
+
     T *work_buffer = new T[length]; 
 
     /*
@@ -229,19 +233,17 @@ template<typename T, typename Comparator> T *iter_merge_sort(T *input, int lengt
         /*
          * merge adjacent subarrays of size width
          */  
-
         for (int start = width; start < length; start += 2 * width)  { // (2 * width) == combined ength of both subarrays.
 
             std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << "; start = " << start << "; start - width = " << start - width << "." << std::endl;
 
-            //--algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer); 
-            algolib::iter_merge(input, start - width, start, std::min(start + width, length), comparer, work_buffer); 
+            algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
         }
     }
     
     delete [] work_buffer;
     
-    return input;
+    return first;
 }
 
 /*
@@ -270,7 +272,7 @@ static void Merge(T[] array, int start, int middle, int end, IComparer<T> compar
 }
 */
 // C++11 version of above function
-template<typename T, typename Comparator > static void iter_merge(T *input, int start, int middle, int end, Comparator comparer, T *work_buffer)
+template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end, Comparator comparer, T *work_buffer)
 {
     auto length = end - start;
     
