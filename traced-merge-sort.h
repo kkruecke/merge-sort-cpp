@@ -239,6 +239,11 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 
             algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
         }
+
+        // Display sorted input so far
+        std::cout << std::string("\nThe currents the current input array: ");
+
+        std::copy(first, first + length, std::ostream_iterator<decltype(*first)>(std::cout, ", "));
     }
     
     delete [] work_buffer;
@@ -302,11 +307,6 @@ template<typename T, typename Iterator, typename Comparator > static void iter_m
     }
  
     std::copy(work_buffer, work_buffer + length, input + start); // copy to start
-
-    std::cout << std::string("\nThe currents the current input array: ");
-
-    // TODO: Remove hardcoded 32.
-    std::copy(input, input + 32, std::ostream_iterator<decltype(*input)>(std::cout, ", "));
 
     std::cout << std::endl;
 }
