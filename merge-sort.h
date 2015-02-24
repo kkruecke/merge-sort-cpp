@@ -18,11 +18,11 @@ template<typename Iterator, typename Comparator> static void merge_sort(Iterator
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
 {
    // allocate a working buffer for our merges
-   T *temp_buffer = new T[last + 1 - first];
+   T *work_buffer = new T[last + 1 - first];
     
    merge_sort(first, last, temp_buffer, C);
     
-   delete [] temp_buffer;
+   delete [] work_buffer;
 }
 
 template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
@@ -32,7 +32,7 @@ template<typename Iterator, typename Comparator> static void merge_sort(Iterator
     if (first < last) {
 
         /*
-         * 1. Divide data structure in a left, first half and second or right half.
+         * 1. Divide data structure in a left, first half and second, right half.
          */ 
 
         int half_distance = (last - first) / 2; 
@@ -40,20 +40,20 @@ template<typename Iterator, typename Comparator> static void merge_sort(Iterator
         Iterator mid = first + half_distance;
 
         /*
-         * Recurse passing as input the left half.
+         * Recurse on the left half.
          */
         algolib::merge_sort(first, mid, buffer, c);    
 
         /*
-         * When left half recursion end, recurse passing as input on right half of [first, last], which is [mid + , last]. 
-         * Note: Both descents--left and right--implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
+         * When left half recursion ends, recurse on right half of [first, last], which is [mid + , last]. 
+         * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
          */
         algolib::merge_sort(mid + 1, last, buffer, c);
 
         /*
-         * 2. Conquer by merging the sub arrays [first, mid] and [first, last] into a sorted array in [first, last]
+         * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
          */ 
-        algolib::merge(first, mid, last, buffer, c); // merge/sort step
+        algolib::merge(first, mid, last, buffer, c); // merge-sort step
     }
 }
 
@@ -108,10 +108,10 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 
    Iterator start = buffer_start;
    
-    for (Iterator end = start + length; start != end;) {
+   for (Iterator end = start + length; start != end;) {
         
         *first++ = *start++;
-    }
+   }
     
 }
 
@@ -170,7 +170,6 @@ template<typename T, typename Iterator, typename Comparator > static void iter_m
         } else {  
 
             work_buffer[current++] = input[middle + right++];
-
         }
     }
  
@@ -185,9 +184,7 @@ template<typename T, typename Iterator, typename Comparator > static void iter_m
     }
  
     std::copy(work_buffer, work_buffer + length, input + start); // copy to start
-   
 }
-
 
 } // end namespace algolib
 #endif
