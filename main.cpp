@@ -20,7 +20,7 @@ int main(int argc, char** argv)
  
   cout << "=============== Sort of std::array<int, 32> below ================\n";
 
-  algolib::merge_sort<int>(a.begin(), a.end() - 1, c);
+  algolib::merge_sort(a.begin(), a.end() - 1, c);
 
   cout << "\n" <<  "Output of merge sort: " << "\n";
 

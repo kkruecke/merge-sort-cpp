@@ -5,16 +5,20 @@
 
 namespace algolib {
 /*
- * Two different iterator types might not actually needed. It may be that a random access iterator type is always required for both.
+ * Iterator here is a random access iterator
  */
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
         Iterator last,
         Iterator buffer_start,
         Comparator C);
 
-template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
+template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator C);
 
+/*
+ * Iterator here is a random access iterator
+ */
+template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
 {
    // allocate a working buffer for our merges
@@ -25,7 +29,7 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
    delete [] work_buffer;
 }
 
-template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
+template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator c) 
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
