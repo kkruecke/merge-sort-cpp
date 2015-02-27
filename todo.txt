@@ -1,1 +1,2 @@
-Count array inversions using a merge-sort sort of technique.
+Count array inversions using a merge-sort sort of technique. For an explanation of how merge sort can be altered to count number of inversions, see
+http://www.quora.com/How-do-you-count-split-inversions-with-the-merge-sort-algorithm
