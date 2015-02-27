@@ -7,39 +7,35 @@ namespace algolib {
 /*
  * Iterator here is a random access iterator
  */
-template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
+template<typename Iterator, typename Comparator> static void merge_count_inversions(Iterator first, Iterator mid,
         Iterator last,
         Iterator buffer_start,
         Comparator C, int &counter);
 
-template<typename Iterator, typename Comparator> void merge_sort_inv_count(Iterator first, Iterator last,
+// count is running total of number of array inversions.
+template<typename Iterator, typename Comparator> void merge_sort_count_inversions(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator C, int &counter);
 
 /*
- * array[end] is last element
+ * array[last] is last element in array
  */
-template<typename T> int count_inversions(T *array, int start, int end)
-{
-  int count = 0;
-  merge_sort_inv_count(array, array + end)
-  return count;
-}
-
-/*
- * Iterator here is a random access iterator
- */
-template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
+template<typename T, typename Iterator, typename Comparator> int count_inversions(T *array, int first, int last, Comparator C)
 {
    // allocate a working buffer for our merges
    T *work_buffer = new T[last + 1 - first];
     
-   merge_sort(first, last, temp_buffer, C);
+   int inversions = 0;
+
+   count_array_inversions(array + first, array + last, temp_buffer, C, inversions);
     
    delete [] work_buffer;
+
+   return inversions;
 }
 
-template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator c) 
+// Returns number of array inversions
+template<typename Iterator, typename Comparator> int merge_sort_count_inversions(Iterator first, Iterator last,
+                                                                  Iterator buffer, Comparator c, int& counter) 
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
     if (first < last) {
@@ -55,18 +51,18 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
         /*
          * Recurse on the left half.
          */
-        algolib::merge_sort(first, mid, buffer, c);    
+        algolib::merge_sort(first, mid, buffer, c, counter);    
 
         /*
          * When left half recursion ends, recurse on right half of [first, last], which is [mid + , last]. 
          * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
          */
-        algolib::merge_sort(mid + 1, last, buffer, c);
+        algolib::merge_sort(mid + 1, last, buffer, c, counter);
 
         /*
          * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
          */ 
-        algolib::merge(first, mid, last, buffer, c); // merge-sort step
+        algolib::merge(first, mid, last, buffer, c, counter); // merge-sort step
     }
 }
 
@@ -75,8 +71,8 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
  * the working buffer over the original segement [first, last]
  */
 
-template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare)
+template<typename Iterator, typename Comparator> static void merge_count_inversions(Iterator first, Iterator mid, Iterator last,
+                                                                  Iterator buffer_start, Comparator compare, int& counter)
 {
     Iterator first1 = first;
     Iterator last1 = mid;
@@ -99,11 +95,14 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
             *buffer_cursor = *first1++;
 
         } else {
-            
+            // inversion found: second array element is larger.
             *buffer_cursor = *first2++;
+             counter++; // TODO: check
         }
     }
     
+    //TODO: add an inversions encountered below to counter
+
     // finish off the first sub-array, if necessary
     for (;first1 <= last1; ++first1, ++buffer_cursor) {
         
@@ -128,76 +127,6 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
     
 }
 
-/*
- * Iterative version of Merge Sort 
- * ===============================
- *
- * Code below is a convert C++11 version of this java code:
- * http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
-*/
-// Fwd reference
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
-                              T *work_buffer); 
-
-template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer)
-{
-    auto length = last + 1 - first;
-
-    T *work_buffer = new T[length]; 
-
-    /*
-     * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
-     * in size, starting  size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
-     *   log base 2(length) rounded up. 
-     */
-    for (int width = 1; width <= length / 2 + 1; width *= 2) {
-        
-        /*
-         * merge adjacent subarrays of size width
-         */  
-
-        for (int start = width; start < length; start += 2 * width)  { // (2 * width) == sum of lengths of both subarrays.
-
-            algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
-        }
-    }
-    
-    delete [] work_buffer;
-    
-    return first;
-}
-
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end,
-                                                                                     Comparator comparer, T *work_buffer)
-{
-    auto length = end - start;
-
-    auto left = 0, right = 0, current = 0;
-
-    while (left < middle - start && right < end - middle)     {
-         
-        if ( comparer(input[start + left], input[middle + right]) ) {
-
-           work_buffer[current++] = input[start + left++];
-
-        } else {  
-
-            work_buffer[current++] = input[middle + right++];
-        }
-    }
- 
-    while (right < end - middle) {
-
-         work_buffer[current++] = input[middle + right++];
-    }
- 
-    while (left < middle - start) {
-
-         work_buffer[current++] = input[start + left++];
-    }
- 
-    std::copy(work_buffer, work_buffer + length, input + start); // copy to start
-}
 
 } // end namespace algolib
 #endif
