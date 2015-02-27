@@ -62,8 +62,8 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
 }
 
 /*
- * Merges subarrays  [first, mid] and [mid + 1, last] into a sorted array in working buffer, buffer_start. Then copies the working buffer 
- * over the original segement [first, last]
+ * Merges subarrays  [first, mid] and [mid + 1, last] into a sorted array in working buffer, buffer_start. Then copies
+ * the working buffer over the original segement [first, last]
  */
 
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
@@ -126,7 +126,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
  * Code below is a convert C++11 version of this java code:
  * http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
 */
-// Fwd ref.
+// Fwd reference
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
                               T *work_buffer); 
 
@@ -137,9 +137,8 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
     T *work_buffer = new T[length]; 
 
     /*
-     * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2 in size, starting 
-     * with size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
-     * 
+     * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
+     * in size, starting  size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
      *   log base 2(length) rounded up. 
      */
     for (int width = 1; width <= length / 2 + 1; width *= 2) {
@@ -159,7 +158,8 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
     return first;
 }
 
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end, Comparator comparer, T *work_buffer)
+template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end,
+                                                                                     Comparator comparer, T *work_buffer)
 {
     auto length = end - start;
 

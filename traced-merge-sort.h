@@ -102,8 +102,9 @@ static Iterator orig_data_struct_last;
       int half_distance = (last - first) / 2; // distance to mid point
         
       Iterator mid = first + half_distance;
-      
-      algolib::merge_sort(first, mid, buffer, c, depth + 1, Animator::section::left);    // recursively subdivide left half
+
+      // recursively subdivide left half
+      algolib::merge_sort(first, mid, buffer, c, depth + 1, Animator::section::left);    
 
       // when left half recursion end, recursively subdivide right half (of prior array on stack).
       algolib::merge_sort(mid + 1, last, buffer, c, depth + 1, Animator::section::right);
@@ -195,8 +196,8 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
  * Iterative version of Merge Sort 
  * ===============================
  *
- * Code below from http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
- *
+ * Java code below is from http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
+ * 
 public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
 {
     for (int i = 1; i <= array.Length / 2 + 1; i *= 2) {
@@ -212,7 +213,7 @@ public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
 */
 
 // Fwd reference
-// Function above converted to C++11
+// Java routine above converted to C++11 below
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
                               T *work_buffer); 
 
@@ -223,9 +224,9 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
     T *work_buffer = new T[length]; 
 
     /*
-     * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2 in size, starting 
-     * with size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
-     * 
+     * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a
+     * power of 2 in size, starting with size one--pow(2, 0)--then 2--pow(2, 1)--then 4--pow(2, 2)--and so on. The number
+     * of iterations is:
      *   log base 2(length) rounded up. 
      */
     for (int width = 1; width <= length / 2 + 1; width *= 2) {
@@ -235,7 +236,8 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
          */  
         for (int start = width; start < length; start += 2 * width)  { // (2 * width) == combined ength of both subarrays.
 
-            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << "; start = " << start << "; start - width = " << start - width << "." << std::endl;
+            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << "; start = " << start << "; start - width = " 
+                     << start - width << "." << std::endl;
 
             algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
         }
@@ -251,31 +253,6 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
     return first;
 }
 
-/*
-static void Merge(T[] array, int start, int middle, int end, IComparer<T> comparer)
-{
-    T[] merge = new T[end - start];
-
-    int l = 0, r = 0, i = 0;
-
-    while (l < middle - start && r < end - middle)     {
-         
-        merge[i++] = comparer.Compare(array[start + l], array[middle + r]) < 0 ? array[start + l++] : array[middle + r++];
-    }
- 
-    while (r < end - middle) {
-
-         merge[i++] = array[middle + r++];
-    }
- 
-    while (l < middle - start) {
-
-         merge[i++] = array[start + l++];
-    }
- 
-    Array.Copy(merge, 0, array, start, merge.Length);
-}
-*/
 // C++11 version of above function
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end, Comparator comparer, T *work_buffer)
 {
