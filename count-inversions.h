@@ -4,6 +4,9 @@
 #include <algorithm>
 
 namespace algolib {
+
+// forward references
+template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator end, Comparator C);
 /*
  * Iterator here is a random access iterator
  */
@@ -13,20 +16,20 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
         Comparator C);
 
 // count is running total of number of array inversions.
-template<typename Iterator, typename Comparator> void merge_sort_count_inversions(Iterator first, Iterator last,
+template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator C, int& total_inversions);
 
 /*
  * array[last] is last element in array
  */
-template<typename T, typename Iterator, typename Comparator> int count_inversions(T *array, int first, int last, Comparator C)
+template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C)
 {
    // allocate a working buffer for our merges
    T *work_buffer = new T[last + 1 - first];
 
    int inversions = 0; 
 
-   merge_sort_count_array_inversions(array + first, array + last, work_buffer, C, inversions);
+   merge_sort_count_inversions(first, last, work_buffer, C, inversions);
     
    delete [] work_buffer;
 
@@ -34,7 +37,7 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 }
 
 // Returns number of array inversions
-template<typename Iterator, typename Comparator> int merge_sort_count_inversions(Iterator first, Iterator last,
+template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator c, int& total_inversions)
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
@@ -73,9 +76,11 @@ template<typename Iterator, typename Comparator> int merge_sort_count_inversions
  * the working buffer over the original segement [first, last]
  */
 
-template<typename Iterator, typename Comparator> static void merge_count_inversions(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare, int& counter)
+template<typename Iterator, typename Comparator> static int merge_count_inversions(Iterator first, Iterator mid, Iterator last,
+                                                                  Iterator buffer_start, Comparator compare)
 {
+ int inversions = 0;
+
     Iterator first1 = first;
     Iterator last1 = mid;
     
@@ -99,7 +104,7 @@ template<typename Iterator, typename Comparator> static void merge_count_inversi
         } else {
             // inversion found: second array element is larger.
             *buffer_cursor = *first2++;
-             counter++; // TODO: check for correctness
+             inversions++; // TODO: check for correctness
         }
     }
     
@@ -126,7 +131,8 @@ template<typename Iterator, typename Comparator> static void merge_count_inversi
         
         *first++ = *start++;
    }
-    
+
+   return inversions;
 }
 
 } // end namespace algolib
