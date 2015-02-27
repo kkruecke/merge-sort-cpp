@@ -1,5 +1,5 @@
-#ifndef MERGE_SORT_H
-#define MERGE_SORT_H
+#ifndef COUNT_INVERSIONS_H
+#define COUNT_INVERSIONS_H
 
 #include <algorithm>
 
@@ -10,10 +10,20 @@ namespace algolib {
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
         Iterator last,
         Iterator buffer_start,
-        Comparator C);
+        Comparator C, int &counter);
 
-template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator C);
+template<typename Iterator, typename Comparator> void merge_sort_inv_count(Iterator first, Iterator last,
+                                                                  Iterator buffer, Comparator C, int &counter);
+
+/*
+ * array[end] is last element
+ */
+template<typename T> int count_inversions(T *array, int start, int end)
+{
+  int count = 0;
+  merge_sort_inv_count(array, array + end)
+  return count;
+}
 
 /*
  * Iterator here is a random access iterator
