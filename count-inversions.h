@@ -7,14 +7,14 @@ namespace algolib {
 /*
  * Iterator here is a random access iterator
  */
-template<typename Iterator, typename Comparator> static void merge_count_inversions(Iterator first, Iterator mid,
+template<typename Iterator, typename Comparator> static int merge_count_inversions(Iterator first, Iterator mid,
         Iterator last,
         Iterator buffer_start,
-        Comparator C, int &counter);
+        Comparator C);
 
 // count is running total of number of array inversions.
 template<typename Iterator, typename Comparator> void merge_sort_count_inversions(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator C, int &counter);
+                                                                  Iterator buffer, Comparator C, int& total_inversions);
 
 /*
  * array[last] is last element in array
@@ -23,10 +23,10 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 {
    // allocate a working buffer for our merges
    T *work_buffer = new T[last + 1 - first];
-    
-   int inversions = 0;
 
-   count_array_inversions(array + first, array + last, temp_buffer, C, inversions);
+   int inversions = 0; 
+
+   count_array_inversions(array + first, array + last, temp_buffer, C, invertions);
     
    delete [] work_buffer;
 
@@ -35,7 +35,7 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 
 // Returns number of array inversions
 template<typename Iterator, typename Comparator> int merge_sort_count_inversions(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator c, int& counter) 
+                                                                  Iterator buffer, Comparator c, int& total_inversions)
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
     if (first < last) {
@@ -51,19 +51,21 @@ template<typename Iterator, typename Comparator> int merge_sort_count_inversions
         /*
          * Recurse on the left half.
          */
-        algolib::merge_sort(first, mid, buffer, c, counter);    
+        algolib::merge_sort(first, mid, buffer, c, total_inversions);
 
         /*
          * When left half recursion ends, recurse on right half of [first, last], which is [mid + , last]. 
          * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
          */
-        algolib::merge_sort(mid + 1, last, buffer, c, counter);
+        algolib::merge_sort(mid + 1, last, buffer, c, total_inversions);
 
         /*
          * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
          */ 
-        algolib::merge(first, mid, last, buffer, c, counter); // merge-sort step
+        total_inversions += algolib::merge(first, mid, last, buffer, c);
     }
+
+    return total_inversions;
 }
 
 /*
@@ -97,11 +99,11 @@ template<typename Iterator, typename Comparator> static void merge_count_inversi
         } else {
             // inversion found: second array element is larger.
             *buffer_cursor = *first2++;
-             counter++; // TODO: check
+             counter++; // TODO: check for correctness
         }
     }
     
-    //TODO: add an inversions encountered below to counter
+    //TODO: add the inversions encountered below to counter
 
     // finish off the first sub-array, if necessary
     for (;first1 <= last1; ++first1, ++buffer_cursor) {
@@ -126,7 +128,6 @@ template<typename Iterator, typename Comparator> static void merge_count_inversi
    }
     
 }
-
 
 } // end namespace algolib
 #endif
