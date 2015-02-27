@@ -26,7 +26,7 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 
    int inversions = 0; 
 
-   count_array_inversions(array + first, array + last, temp_buffer, C, invertions);
+   merge_sort_count_array_inversions(array + first, array + last, work_buffer, C, inversions);
     
    delete [] work_buffer;
 
@@ -51,18 +51,18 @@ template<typename Iterator, typename Comparator> int merge_sort_count_inversions
         /*
          * Recurse on the left half.
          */
-        algolib::merge_sort(first, mid, buffer, c, total_inversions);
+        algolib::merge_sort_count_inversions(first, mid, buffer, c, total_inversions);
 
         /*
          * When left half recursion ends, recurse on right half of [first, last], which is [mid + , last]. 
          * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
          */
-        algolib::merge_sort(mid + 1, last, buffer, c, total_inversions);
+        algolib::merge_sort_count_inversions(mid + 1, last, buffer, c, total_inversions);
 
         /*
          * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
          */ 
-        total_inversions += algolib::merge(first, mid, last, buffer, c);
+        total_inversions += algolib::merge_count_inversions(first, mid, last, buffer, c);
     }
 
     return total_inversions;
