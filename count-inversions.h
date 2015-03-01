@@ -118,6 +118,9 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
         
         *buffer_cursor = *first1;
     }
+
+    // TODO: Add to inversions the inversions in 2nd array, if any remain per
+    // http://www.quora.com/How-do-you-count-split-inversions-with-the-merge-sort-algorithm
     
     // finish off the second sub-array, if necessary
     for (;first2 <= last2; ++first2, ++buffer_cursor) {
