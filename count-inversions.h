@@ -99,16 +99,19 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
         
         if ( compare(*first1, *first2) ) {
             
-            *buffer_cursor = *first1++;
+            *buffer_cursor = *first1++; // not an inversion
 
         } else {
-            // inversion found: second array element is larger.
+
+            // inversion found: element in first array is larger than element in second array.
             *buffer_cursor = *first2++;
              inversions++; // TODO: check for correctness
         }
     }
     
-    //TODO: add the inversions encountered below to counter
+    // Increase inversion count by the remaining elements in first array that have not yet been moved to output buffer because...
+    // TODO: fill in because clause. See http://www.quora.com/How-do-you-count-split-inversions-with-the-merge-sort-algorithm
+    inversions += (last1 + 1 - first1);
 
     // finish off the first sub-array, if necessary
     for (;first1 <= last1; ++first1, ++buffer_cursor) {
