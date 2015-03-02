@@ -158,7 +158,7 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
              * left and right subarrays are sorted, so all the remaining elements in left-subarray (a[i+1], a[i+2] … a[mid]) will be greater
              * than a[j].
              */  
-             inversions += (last1 + 1 - first1); // TODO: Check this line per comments above.
+             inversions += (last1 + 1 - first1); 
         }
     }
     
