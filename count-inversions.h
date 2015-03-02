@@ -144,12 +144,12 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
             // inversion found: element in first array is larger than element in second array.
             *buffer_cursor = *first2++;
 
-            /* TODO: Check this comment and the code for truthfulness:
-             * If value of the right array is lower, add how many left array values are higher (number of inversions)
-             * From:
-             * http://codereview.stackexchange.com/questions/51585/count-array-inversions-merge-sort 
+            /* 
+             * How do we count the number of inversions in the merge step? In tje merge process, let i is used for indexing left sub-array and j for right sub-array.
+             * At any step in merge(), if a[i] is greater than a[j], then there are (mid – i) inversions, because left and right subarrays are sorted, so all the
+             * remaining elements in left-subarray (a[i+1], a[i+2] … a[mid]) will be greater than a[j]
              */  
-             inversions += (last1 + 1 - leftCount);  
+             inversions += (last1 + 1 - leftCount); // or last1 - leftCount? 
         }
     }
     
