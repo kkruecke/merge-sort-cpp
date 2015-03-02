@@ -70,7 +70,45 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
 
     return total_inversions;
 }
+/*
+ * Prospective new code:
+ *
+ template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C)
+{
+   // allocate a working buffer for our merges
+   T *work_buffer = new T[last + 1 - first];
 
+   int inversions = merge_sort_count_inversions(first, last, work_buffer, C);
+    
+   delete [] work_buffer;
+
+   return inversions;
+}
+
+// Returns number of array inversions
+template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
+                                                                  Iterator buffer, Comparator c)
+{
+ int inversions = 0;
+
+    // Base case: the range [first, last] can no longer be subdivided; it is of length one.
+    if (first < last) {
+
+        int half_distance = (last - first) / 2; 
+        
+        Iterator mid = first + half_distance;
+
+        inversions = algolib::merge_sort_count_inversions(first, mid, buffer, c, total_inversions);
+
+        inversions += algolib::merge_sort_count_inversions(mid + 1, last, buffer, c, total_inversions);
+
+        inversions += algolib::merge_count_inversions(first, mid, last, buffer, c);
+    }
+
+    return inversions;
+}
+
+ */
 /*
  * Merges subarrays  [first, mid] and [mid + 1, last] into a sorted array in working buffer, buffer_start. Then copies
  * the working buffer over the original segement [first, last]
@@ -105,23 +143,22 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
 
             // inversion found: element in first array is larger than element in second array.
             *buffer_cursor = *first2++;
-             inversions++; // TODO: check for correctness
+
+            /* TODO: Check this comment and the code for truthfulness:
+             * If value of the right array is lower, add how many left array values are higher (number of inversions)
+             * From:
+             * http://codereview.stackexchange.com/questions/51585/count-array-inversions-merge-sort 
+             */  
+             inversions += (last1 + 1 - leftCount);  
         }
     }
     
-    // Increase inversion count by the remaining elements in first array that have not yet been moved to output buffer because...
-    // TODO: fill in because clause. See http://www.quora.com/How-do-you-count-split-inversions-with-the-merge-sort-algorithm
-    inversions += (last1 + 1 - first1);
-
     // finish off the first sub-array, if necessary
     for (;first1 <= last1; ++first1, ++buffer_cursor) {
         
         *buffer_cursor = *first1;
     }
 
-    // TODO: Add to inversions the inversions in 2nd array, if any remain per
-    // http://www.quora.com/How-do-you-count-split-inversions-with-the-merge-sort-algorithm
-    
     // finish off the second sub-array, if necessary
     for (;first2 <= last2; ++first2, ++buffer_cursor) {
         
