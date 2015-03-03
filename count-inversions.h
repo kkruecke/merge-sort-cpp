@@ -5,8 +5,10 @@
 
 namespace algolib {
 
-// forward references
+/* forward references */
+
 template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator end, Comparator C);
+
 /*
  * Iterator here is a random access iterator
  */
@@ -19,33 +21,6 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
                                                                   Iterator work_buffer, Comparator c);
 
 
-
-// count is running total of number of array inversions.
-/*
- * Prior code
- *
-template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
- *                                                                Iterator buffer, Comparator C, int& total_inversions);
- */
-
-/*
- * array[last] is last element in array
- */
-/*
-template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C)
-{
-   // allocate a working buffer for our merges
-   T *work_buffer = new T[last + 1 - first];
-
-   int inversions = 0; 
-
-   merge_sort_count_inversions(first, last, work_buffer, C, inversions);
-    
-   delete [] work_buffer;
-
-   return inversions;
-}
-*/
 template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C)
 {
    // allocate a working buffer for our merges
@@ -57,44 +32,8 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 
    return inversions;
 }
-// Returns number of array inversions
-/*
-template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator c, int& total_inversions)
-{
-    // Base case: the range [first, last] can no longer be subdivided; it is of length one.
-    if (first < last) {
 
-        //
-        // 1. Divide data structure in a left, first half and second, right half.
-        // 
-
-        int half_distance = (last - first) / 2; 
-        
-        Iterator mid = first + half_distance;
-
-         //
-         // Recurse on the left half.
-         // 
-        algolib::merge_sort_count_inversions(first, mid, buffer, c, total_inversions);
-
-         //
-         // When left half recursion ends, recurse on right half of [first, last], which is [mid + , last]. 
-         // Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
-         // 
-        algolib::merge_sort_count_inversions(mid + 1, last, buffer, c, total_inversions);
-
-         //
-         // 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
-         // 
-        total_inversions += algolib::merge_count_inversions(first, mid, last, buffer, c);
-    }
-
-    return total_inversions;
-}
-*/
-
-// Returns number of array inversions
+/* Returns number of array inversions */
 template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
                                                                   Iterator work_buffer, Comparator c)
 {
@@ -107,6 +46,16 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
         
         Iterator mid = first + half_distance;
 
+        /* 
+         * The variable inversions is a running total of the total number of inversions that occurs in each merge step, as we recursively
+         * descend subdividing (first the right half and then the left) and then return and conquer by merging and counting inversions.
+
+         * At the end of recursively subdividing the left half, we have a subarray of one element, the first value in the array. We
+         * then return from subdividing the left half, and we recursively subdivide the right half of the previously-next-larger subarray, which is
+         * of size two. This gives us the right-most element of the subarray of size two, consisting of the first two elements in the array.  
+         * We then call merge_count_inversions(), which will be either one or zero.  
+         *  
+         */
         inversions = algolib::merge_sort_count_inversions(first, mid, work_buffer, c);
 
         inversions += algolib::merge_sort_count_inversions(mid + 1, last, work_buffer, c);
