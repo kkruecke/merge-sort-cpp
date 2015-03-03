@@ -47,13 +47,14 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
         Iterator mid = first + half_distance;
 
         /* 
-         * The variable inversions is a running total of the total number of inversions that occurs in each merge step, as we recursively
-         * descend subdividing (first the right half and then the left) and then return and conquer by merging and counting inversions.
+         * The variable 'inversions' is a running total of the total number of inversions that occurs in each merge step, as we recursively
+         * descend subdividing first the right half and then the left and then return and conquer by merging and counting inversions, and adding
+         * the number of inversions found to 'inversions'.
 
-         * At the end of recursively subdividing the left half, we have a subarray of one element, the first value in the array. We
-         * then return from subdividing the left half, and we recursively subdivide the right half of the previously-next-larger subarray, which is
-         * of size two. This gives us the right-most element of the subarray of size two, consisting of the first two elements in the array.  
-         * We then call merge_count_inversions(), which will be either one or zero.  
+         * At the end of recursively subdividing the left half, we have a subarray of one element, the first value in the array. We then return
+         * (with an inversion count of 0) from subdividing the left half, and we recursively subdivide the right half of the previously-next-larger
+         * subarray of size two. This gives us the right-most element of the subarray of size two consisting of the first two elements in the array.  
+         * We then call merge_count_inversions() on this subarray of size two, which will return an inversion count of either one or zero.  
          *  
          */
         inversions = algolib::merge_sort_count_inversions(first, mid, work_buffer, c);
@@ -101,12 +102,12 @@ template<typename Iterator, typename Comparator> static int merge_count_inversio
             // inversion found: element in first array is larger than element in second array.
             *buffer_cursor = *first2++;
 
-            /* From: http://www.geeksforgeeks.org/counting-inversions/ 
-             * How do we count the number of inversions in the merge step? In the merge process, let i is used for indexing left sub-array
-             * and j for right sub-array. At any step in merge(), if a[i] is greater than a[j], then there are (mid – i) inversions, because
-             * left and right subarrays are sorted, so all the remaining elements in left-subarray (a[i+1], a[i+2] … a[mid]) will be greater
-             * than a[j].
-             */  
+   /* From: http://www.geeksforgeeks.org/counting-inversions/ 
+    * How do we count the number of inversions in the merge step? In the merge process, let i is used for indexing left sub-array
+    * and j for right sub-array. At any step in merge(), if a[i] is greater than a[j], then there are (mid – i) inversions, because
+    * left and right subarrays are sorted, so all the remaining elements in left-subarray (a[i+1], a[i+2] … a[mid]) will be greater
+    * than a[j].
+    */  
              inversions += (last1 + 1 - first1); 
         }
     }
