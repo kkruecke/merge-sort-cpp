@@ -48,13 +48,13 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
 
         /* 
          * The variable 'inversions' is a running total of the total number of inversions that occurs in each merge step, as we recursively
-         * descend subdividing first the right half and then the left and then return and conquer by merging and counting inversions, and adding
-         * the number of inversions found to 'inversions'.
+         * descend subdividing first the left half and then the right half and then return and conquer by merging and counting inversions, we accumulate 
+         * the total number of inversion by using the += operator.
 
-         * At the end of recursively subdividing the left half, we have a subarray of one element, the first value in the array. We then return
-         * (with an inversion count of 0) from subdividing the left half, and we recursively subdivide the right half of the previously-next-larger
-         * subarray of size two. This gives us the right-most element of the subarray of size two consisting of the first two elements in the array.  
-         * We then call merge_count_inversions() on this subarray of size two, which will return an inversion count of either one or zero.  
+         * At the end of recursively subdividing the left half, we have a subarray of one element. When we recurse on it, we hit the base case and retunr
+         * zero inversions. We then recursively subdivide the right half of the previously-next-larger subarray of size two. This gives us the right-most
+         * element of the subarray of size two (consisting of the first two elements in the array).  When we recurse on it, we hit the base case and return
+         * zero inversion. We then call merge_count_inversions() on this subarray of size two, which will return an inversion count of either one or zero.  
          *  
          */
         inversions = algolib::merge_sort_count_inversions(first, mid, work_buffer, c);
