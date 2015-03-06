@@ -28,7 +28,7 @@ std::map<Animator::section, std::string>  Animator::mapping { {all, std::string(
                          {right, std::string("right")}
                             };
 
-template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix)
+template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix) noexcept
 {
   std::string part = Animator::get_string(sec);
 
@@ -43,7 +43,7 @@ template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator
 /*
  * Parameter end must be one past the actual end.
  */
-template<typename Iterator> void print_array(Iterator start, Iterator end)
+template<typename Iterator> void print_array(Iterator start, Iterator end) noexcept
 {
     // print out merged array
     std::cout << std::string(" [ "); 
@@ -58,16 +58,16 @@ template<typename Iterator> void print_array(Iterator start, Iterator end)
  */
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
         Iterator buffer_start,
-        Comparator C, int depth);
+        Comparator C, int depth) noexcept;
 
 // merge_sort() is overloaded
-template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c);
+template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c) noexcept;
 
 template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all);
+                                                                  Iterator buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all) noexcept;
 
 
-template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c)
+template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c) noexcept
 {
    // allocate a working buffer for our merges
    auto length = last + 1 - first;    //<-- Note: this requires a random access iterator
@@ -79,7 +79,7 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 }
 
 template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator c, int depth, Animator::section sec) 
+                                                                  Iterator buffer, Comparator c, int depth, Animator::section sec) noexcept 
 {
 static Iterator orig_data_struct_first;
 static Iterator orig_data_struct_last;
@@ -126,7 +126,7 @@ static Iterator orig_data_struct_last;
 }
 
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare, int depth)
+                                                                  Iterator buffer_start, Comparator compare, int depth) noexcept
 {
     Iterator first1 = first;
     Iterator last1 = mid;
@@ -215,9 +215,9 @@ public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
 // Fwd reference
 // Java routine above converted to C++11 below
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
-                              T *work_buffer); 
+                              T *work_buffer) noexcept; 
 
-template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer)
+template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer) noexcept
 {
     auto length = last + 1 - first;
 
@@ -254,7 +254,8 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 }
 
 // C++11 version of above function
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end, Comparator comparer, T *work_buffer)
+template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle,
+                                                                                        int end, Comparator comparer, T *work_buffer) noexcept
 {
     auto length = end - start;
     

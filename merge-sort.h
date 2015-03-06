@@ -10,15 +10,15 @@ namespace algolib {
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
         Iterator last,
         Iterator buffer_start,
-        Comparator C);
+        Comparator C) noexcept;
 
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator C);
+                                                                  Iterator buffer, Comparator C) noexcept;
 
 /*
  * Iterator here is a random access iterator
  */
-template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C)
+template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C) noexcept
 {
    // allocate a working buffer for our merges
    T *work_buffer = new T[last + 1 - first];
@@ -29,7 +29,7 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 }
 
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator c) 
+                                                                  Iterator buffer, Comparator c)  noexcept
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
     if (first < last) {
@@ -66,7 +66,7 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
  */
 
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare)
+                                                                  Iterator buffer_start, Comparator compare) noexcept
 {
     Iterator first1 = first;
     Iterator last1 = mid;
@@ -127,9 +127,9 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 */
 // Fwd reference
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
-                              T *work_buffer); 
+                              T *work_buffer) noexcept; 
 
-template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer)
+template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer) noexcept
 {
     auto length = last + 1 - first;
 
@@ -158,7 +158,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 }
 
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end,
-                                                                                     Comparator comparer, T *work_buffer)
+                                                                                     Comparator comparer, T *work_buffer) noexcept
 {
     auto length = end - start;
 

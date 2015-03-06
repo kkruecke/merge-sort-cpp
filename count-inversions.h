@@ -7,7 +7,7 @@ namespace algolib {
 
 /* forward references */
 
-template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator end, Comparator C);
+template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator end, Comparator C) noexcept;
 
 /*
  * Iterator here is a random access iterator
@@ -15,13 +15,13 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 template<typename Iterator, typename Comparator> static int merge_count_inversions(Iterator first, Iterator mid,
         Iterator last,
         Iterator buffer_start,
-        Comparator C);
+        Comparator C) noexcept;
 
 template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
-                                                                  Iterator work_buffer, Comparator c);
+                                                                  Iterator work_buffer, Comparator c) noexcept;
 
 
-template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C)
+template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C) noexcept
 {
    // allocate a working buffer for our merges
    T *work_buffer = new T[last + 1 - first];
@@ -35,7 +35,7 @@ template<typename T, typename Iterator, typename Comparator> int count_inversion
 
 /* Returns number of array inversions */
 template<typename Iterator, typename Comparator> static int merge_sort_count_inversions(Iterator first, Iterator last,
-                                                                  Iterator work_buffer, Comparator c)
+                                                                  Iterator work_buffer, Comparator c) noexcept
 {
  int inversions = 0;
 
@@ -73,7 +73,7 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
  */
 
 template<typename Iterator, typename Comparator> static int merge_count_inversions(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare)
+                                                                  Iterator buffer_start, Comparator compare) noexcept
 {
  int inversions = 0;
 
