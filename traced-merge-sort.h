@@ -13,7 +13,7 @@ namespace algolib {
 class Animator { 
   public:    
     enum section {all, left, right };
-    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix = std::string{});
+    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix = std::string{}) noexcept;
   private:
     static  std::map<section, std::string> mapping;
 
@@ -28,7 +28,7 @@ std::map<Animator::section, std::string>  Animator::mapping { {all, std::string(
                          {right, std::string("right")}
                             };
                             
-template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix)
+template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix) noexcept
 {
   std::string part = Animator::get_string(sec);
 
