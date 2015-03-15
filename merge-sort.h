@@ -2,6 +2,7 @@
 #define MERGE_SORT_H
 
 #include <algorithm>
+#include <array>
 
 namespace algolib {
 /*
@@ -23,7 +24,7 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
    // allocate a working buffer for our merges
    T *work_buffer = new T[last + 1 - first];
     
-   merge_sort(first, last, temp_buffer, C);
+   merge_sort(first, last, work_buffer, C);
     
    delete [] work_buffer;
 }

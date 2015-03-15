@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include "traced-merge-sort.h" // within algolib namespace
-//--#include "count-inversions.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
