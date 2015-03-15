@@ -13,7 +13,7 @@ namespace algolib {
 class Animator { 
   public:    
     enum section {all, left, right };
-    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix =std::string{}); 
+    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix = std::string{});
   private:
     static  std::map<section, std::string> mapping;
 
@@ -27,8 +27,8 @@ std::map<Animator::section, std::string>  Animator::mapping { {all, std::string(
                          {left, std::string(" left")},
                          {right, std::string("right")}
                             };
-
-template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix) noexcept
+                            
+template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix)
 {
   std::string part = Animator::get_string(sec);
 
@@ -254,7 +254,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 }
 
 // C++11 version of above function
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle,
+template<typename T, typename Iterator, typename Comparator > void iter_merge(Iterator input, int start, int middle,
                                                                                         int end, Comparator comparer, T *work_buffer) noexcept
 {
     auto length = end - start;
