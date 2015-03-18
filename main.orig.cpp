@@ -5,11 +5,16 @@
 #include <algorithm>
 #include <iterator>
 #include <array>
+#include <memory>
 
 using namespace std;
 
 int main(int argc, char** argv)
 {
+  shared_ptr<int []> sh_ptr{new int[4]};
+  
+  shared_ptr<int []> sh_ptr2 = sh_ptr:qtpr;;
+  
   array<int, 32> a;
 
   auto n = a.size();
@@ -43,7 +48,7 @@ int main(int argc, char** argv)
     
   less<int> compare; 
  
-  algolib::iter_merge_sort<int>(&a2[0], &a2[31], compare);
+  //algolib::iter_merge_sort<int>(&a2[0], &a2[31], compare);
 
   cout << "\n------------------\n" <<  "Output of iterative merge sort: " << "\n";
 
@@ -53,4 +58,3 @@ int main(int argc, char** argv)
   
   return 0;
 }
-
