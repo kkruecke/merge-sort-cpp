@@ -1,5 +1,0 @@
-Convert the code to use managed pointers--uniq_ptr, shared_ptr or weak_ptr.
-Q: Should I used a shared_ptr for the working buffer, or should I use a unique_ptr and within the merge step a weak_ptr?
-
-Count array inversions using a merge-sort sort of technique. For an explanation of how merge sort can be altered to count number of inversions, see
-http://www.quora.com/How-do-you-count-split-inversions-with-the-merge-sort-algorithm
