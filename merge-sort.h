@@ -23,12 +23,9 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C) noexcept
 {
    // allocate a working buffer for our merges
-//-- T *work_buffer = new T[last + 1 - first];
-   std::unique_ptr<T> work_buffer { new T[last + 1 - first] };
+   T *work_buffer = new T[last + 1 - first];
     
    merge_sort(first, last, work_buffer, C);
-    
-//   delete [] work_buffer;
 }
 
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
@@ -136,8 +133,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 {
     auto length = last + 1 - first;
 
-    //--T *work_buffer = new T[length]; 
-    std::unique_ptr<T> work_buffer { new T[length] }; 
+    T *work_buffer = new T[length]; 
 
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
@@ -156,7 +152,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
         }
     }
     
-//  delete [] work_buffer;
+    delete [] work_buffer;
     
     return first;
 }
