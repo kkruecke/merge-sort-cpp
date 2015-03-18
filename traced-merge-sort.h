@@ -7,13 +7,15 @@
 #include <iterator>
 #include <algorithm>
 #include <map>
+#include <memory>
 
 namespace algolib {
 
 class Animator { 
   public:    
     enum section {all, left, right };
-    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth, Animator::section s, std::string suffix = std::string{}) noexcept;
+    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth,
+                                                         Animator::section s, std::string suffix = std::string{}) noexcept;
   private:
     static  std::map<section, std::string> mapping;
 
@@ -53,9 +55,6 @@ template<typename Iterator> void print_array(Iterator start, Iterator end) noexc
     std::cout << std::string("] "); 
 }
 
-/*
- * Two iterator types are needed. The data structure being sorted may not an array.
- */
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
         Iterator buffer_start,
         Comparator C, int depth) noexcept;
@@ -66,16 +65,14 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator C, int depth = 0, Animator::section sec = Animator::all) noexcept;
 
-
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator c) noexcept
 {
    // allocate a working buffer for our merges
    auto length = last + 1 - first;    //<-- Note: this requires a random access iterator
-   auto temp_buffer = new T[length];  
-    
-   merge_sort(first, last, temp_buffer, c);
-    
-   delete [] temp_buffer;
+
+   std::unique_ptr<T[]> temp_array { new T[length] };  
+
+   merge_sort(first, last, temp_array.get(), c);
 }
 
 template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
@@ -214,6 +211,7 @@ public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
 
 // Fwd reference
 // Java routine above converted to C++11 below
+/*
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
                               T *work_buffer) noexcept; 
 
@@ -221,20 +219,21 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 {
     auto length = last + 1 - first;
 
-    T *work_buffer = new T[length]; 
+ //--T *work_buffer = new T[length]; 
+    std::unique_ptr<T> work_buffer { new T[length] }; 
 
-    /*
-     * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a
-     * power of 2 in size, starting with size one--pow(2, 0)--then 2--pow(2, 1)--then 4--pow(2, 2)--and so on. The number
-     * of iterations is:
-     *   log base 2(length) rounded up. 
-     */
+    //
+    // Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a
+    // power of 2 in size, starting with size one--pow(2, 0)--then 2--pow(2, 1)--then 4--pow(2, 2)--and so on. The number
+    // of iterations is:
+    //   log base 2(length) rounded up. 
+    //
     for (int width = 1; width <= length / 2 + 1; width *= 2) {
         
-        /*
-         * merge adjacent subarrays of size width
-         */  
-        for (int start = width; start < length; start += 2 * width)  { // (2 * width) == combined ength of both subarrays.
+        
+        // merge adjacent subarrays of size width
+          
+        for (int start = width; start < length; start += 2 * width)  { // (2 *width) == combined ength of both subarrays.
 
             std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << "; start = " << start << "; start - width = " 
                      << start - width << "." << std::endl;
@@ -248,7 +247,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
         std::copy(first, first + length, std::ostream_iterator<decltype(*first)>(std::cout, ", "));
     }
     
-    delete [] work_buffer;
+//--delete [] work_buffer;
     
     return first;
 }
@@ -288,7 +287,7 @@ template<typename T, typename Iterator, typename Comparator > void iter_merge(It
 
     std::cout << std::endl;
 }
-
+*/
 
 } // end namespace algolib
 #endif
