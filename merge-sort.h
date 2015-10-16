@@ -2,7 +2,6 @@
 #define MERGE_SORT_H
 
 #include <algorithm>
-#include <array>
 #include <memory>
 
 namespace algolib {
@@ -23,9 +22,9 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C) noexcept
 {
    // allocate a working buffer for our merges
-   T *work_buffer = new T[last + 1 - first];
+   std::unique_ptr<T[]> work_buffer { new T[last + 1 - first] };
     
-   merge_sort(first, last, work_buffer, C);
+   merge_sort(first, last, work_buffer.get(), C);
 }
 
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
@@ -38,9 +37,9 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
          * 1. Divide data structure in a left, first half and second, right half.
          */ 
 
-        int half_distance = (last - first) / 2; 
+//--   int half_distance = (last - first) / 2; 
         
-        Iterator mid = first + half_distance;
+        Iterator mid = first + ((last - first) / 2);
 
         /*
          * Recurse on the left half.
@@ -48,7 +47,7 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
         algolib::merge_sort(first, mid, buffer, c);    
 
         /*
-         * When left half recursion ends, recurse on right half of [first, last], which is [mid + , last]. 
+         * When left half recursion ends, recurse on right half of [first, last], which is [mid + 1, last]. 
          * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
          */
         algolib::merge_sort(mid + 1, last, buffer, c);
@@ -56,7 +55,7 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
         /*
          * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
          */ 
-        algolib::merge(first, mid, last, buffer, c); // merge-sort step
+        algolib::merge(first, mid, last, buffer, c); // merge-and-sort step
     }
 }
 
