@@ -36,11 +36,9 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
         /*
          * 1. Divide data structure in a left, first half and second, right half.
          */ 
-
-//--   int half_distance = (last - first) / 2; 
         
-        Iterator mid = first + ((last - first) / 2);
-
+        Iterator mid = first + (last - first) / 2; // Note: division binds first before first is added.
+        
         /*
          * Recurse on the left half.
          */
@@ -114,7 +112,6 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         
         *first++ = *start++;
    }
-    
 }
 
 /*

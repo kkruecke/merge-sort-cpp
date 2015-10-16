@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char** argv)
-{
+{ 
   array<int, 32> a;
 
   auto n = a.size();
