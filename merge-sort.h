@@ -135,7 +135,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
      * in size, starting  size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
-     *   log base 2(length) rounded up. 
+     * log base 2(length) rounded up. 
      */
     for (int width = 1; width <= length / 2 + 1; width *= 2) {
         

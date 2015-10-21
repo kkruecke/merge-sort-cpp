@@ -9,8 +9,6 @@
 #include <map>
 #include <memory>
 
-// Java iterative merge srot code at http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
-
 namespace algolib {
 
 class Animator { 
