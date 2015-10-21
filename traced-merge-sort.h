@@ -9,6 +9,8 @@
 #include <map>
 #include <memory>
 
+// Java iterative merge srot code at http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
+
 namespace algolib {
 
 class Animator { 
@@ -188,106 +190,4 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         *first++ = *start++;
     }
 }
-
-/*
- * Iterative version of Merge Sort 
- * ===============================
- *
- * Java code below is from http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
- * 
-public static T[] Iter_Merge_Sort(T[] array, IComparer<T> comparer)
-{
-    for (int i = 1; i <= array.Length / 2 + 1; i *= 2) {
-
-        for (int j = i; j < array.Length; j += 2 * i)  {
-
-            Merge(array, j - i, j, Math.Min(j + i, array.Length), comparer);
-        }
-    }
- 
-    return array;
-}
-*/
-
-// Fwd reference
-// Java routine above converted to C++11 below
-/*
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
-                              T *work_buffer) noexcept; 
-
-template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer) noexcept
-{
-    auto length = last + 1 - first;
-
- //--T *work_buffer = new T[length]; 
-    std::unique_ptr<T> work_buffer { new T[length] }; 
-
-    //
-    // Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a
-    // power of 2 in size, starting with size one--pow(2, 0)--then 2--pow(2, 1)--then 4--pow(2, 2)--and so on. The number
-    // of iterations is:
-    //   log base 2(length) rounded up. 
-    //
-    for (int width = 1; width <= length / 2 + 1; width *= 2) {
-        
-        
-        // merge adjacent subarrays of size width
-          
-        for (int start = width; start < length; start += 2 * width)  { // (2 *width) == combined ength of both subarrays.
-
-            std::cout << "\n Inner loop of iter_merge_sort: width =  " << width << "; start = " << start << "; start - width = " 
-                     << start - width << "." << std::endl;
-
-            algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
-        }
-
-        // Display sorted input so far
-        std::cout << std::string("\nThe currents the current input array: ");
-
-        std::copy(first, first + length, std::ostream_iterator<decltype(*first)>(std::cout, ", "));
-    }
-    
-//--delete [] work_buffer;
-    
-    return first;
-}
-
-// C++11 version of above function
-template<typename T, typename Iterator, typename Comparator > void iter_merge(Iterator input, int start, int middle,
-                                                                                        int end, Comparator comparer, T *work_buffer) noexcept
-{
-    auto length = end - start;
-    
-    auto left = 0, right = 0, current = 0;
-
-    while (left < middle - start && right < end - middle)     {
-         
-        if ( comparer(input[start + left], input[middle + right]) ) {
-
-           work_buffer[current++] = input[start + left++];
-
-        } else {  
-
-            work_buffer[current++] = input[middle + right++];
-
-        }
-    }
- 
-    while (right < end - middle) {
-
-         work_buffer[current++] = input[middle + right++];
-    }
- 
-    while (left < middle - start) {
-
-         work_buffer[current++] = input[start + left++];
-    }
- 
-    std::copy(work_buffer, work_buffer + length, input + start); // copy to start
-
-    std::cout << std::endl;
-}
-*/
-
-} // end namespace algolib
 #endif
