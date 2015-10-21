@@ -6,7 +6,8 @@
 
 namespace algolib {
 /*
- * Iterator here is a random access iterator
+ * Iterator here is a random access iterator that supports the index operator as well as pointer-like subtraction and addition.
+ * C is a function object that overloads the function call operator to do determine "less than".
  */
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
         Iterator last,
@@ -129,7 +130,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 {
     auto length = last + 1 - first;
 
-    T *work_buffer = new T[length]; 
+    std::unique_ptr<T[]> work_buffer { new T[length] };
 
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
@@ -144,11 +145,9 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 
         for (int start = width; start < length; start += 2 * width)  { // (2 * width) == sum of lengths of both subarrays.
 
-            algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer); 
+            algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer.get()); 
         }
     }
-    
-    delete [] work_buffer;
     
     return first;
 }
