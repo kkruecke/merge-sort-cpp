@@ -77,6 +77,8 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
    merge_sort(first, last, temp_array.get(), c);
 }
 
+//} // end namespace algolib
+
 template<typename Iterator, typename Comparator> static void merge_sort(Iterator first, Iterator last,
                                                                   Iterator buffer, Comparator c, int depth, Animator::section sec) noexcept 
 {
@@ -110,14 +112,12 @@ static Iterator orig_data_struct_last;
       
       // merge the two halves
       algolib::merge(first, mid, last, buffer, c, depth);
-
-      // print out the original data structure to be sorted
-      std::cout << "\nOutput so far: ";
-
-      print_array(orig_data_struct_first, orig_data_struct_last + 1);
-
-      std::cout << "\n" << std::endl;
-
+      
+      // print the result of the merge
+      print_array(first, last + 1); 
+      
+      std::cout << std::endl;
+      
   } else {
 
       Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends."));
@@ -145,7 +145,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 
     print_array(first2, last2 +  1);
 
-    std::cout <<  std::string("  ---> ") << "\n                    ";
+    std::cout <<  std::string(" ---> "); // << "\n                    ";
 
     int index = 0;
     
@@ -190,4 +190,6 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
         *first++ = *start++;
     }
 }
+
+} // end namespace algolib
 #endif

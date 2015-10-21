@@ -1,5 +1,6 @@
 #include <cstdlib>
-#include "merge-sort.h" //#include "traced-merge-sort.h" // within algolib namespace
+//#include "merge-sort.h" 
+#include "traced-merge-sort.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
@@ -21,13 +22,14 @@ int main(int argc, char** argv)
   cout << "=============== Sort of std::array<int, 32> below ================\n";
 
   algolib::merge_sort<int>(a.begin(), a.end() - 1, c);
-  //--algolib::merge_sort_count_inversions<int>(a.begin(), a.end() - 1, c);
-
+  
   cout << "\n" <<  "Output of merge sort: " << "\n";
 
   copy(a.begin(), a.end(), ostream_iterator<int>(cout, ", ")); 
 
   cout << endl;
+  
+  return 0;
 
 // Sort built-in array using iterative merge sort
 
