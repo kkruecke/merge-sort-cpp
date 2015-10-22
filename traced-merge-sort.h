@@ -118,7 +118,7 @@ static Iterator orig_data_struct_last;
       
   } else {
 
-      Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends."));
+      Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends. No merge."));
   }
 }
 
