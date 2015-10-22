@@ -24,11 +24,9 @@ template<typename Iterator, typename Comparator> static int merge_sort_count_inv
 template<typename T, typename Iterator, typename Comparator> int count_inversions(Iterator first, Iterator last, Comparator C) noexcept
 {
    // allocate a working buffer for our merges
-   T *work_buffer = new T[last + 1 - first];
+   std::unique_ptr<T[]> work_buffer { new T[last + 1 - first] };
 
    int inversions = merge_sort_count_inversions(first, last, work_buffer, C);
-    
-   delete [] work_buffer;
 
    return inversions;
 }
