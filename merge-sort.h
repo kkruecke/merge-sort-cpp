@@ -9,9 +9,9 @@ namespace algolib {
  * Iterator here is a random access iterator that supports the index operator as well as pointer-like subtraction and addition.
  * C is a function object that overloads the function call operator to do determine "less than".
  */
-template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid,
-        Iterator last,
-        Iterator buffer_start,
+template<typename Iterator, typename Comparator> static void merge(Iterator first, const Iterator mid,
+        const Iterator last,
+        const Iterator buffer_start,
         Comparator C) noexcept;
 
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
@@ -29,7 +29,7 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 }
 
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
-                                                                  Iterator buffer, Comparator c)  noexcept
+                                                                 const Iterator buffer, Comparator c)  noexcept
 {
     // Base case: the range [first, last] can no longer be subdivided; it is of length one.
     if (first < last) {
@@ -63,8 +63,8 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
  * the working buffer over the original segement [first, last]
  */
 
-template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
-                                                                  Iterator buffer_start, Comparator compare) noexcept
+template<typename Iterator, typename Comparator> static void merge(Iterator first, const Iterator mid, const Iterator last,
+                                                                  const Iterator buffer_start, Comparator compare) noexcept
 {
     Iterator first1 = first;
     Iterator last1 = mid;

@@ -1,6 +1,6 @@
 #include <cstdlib>
-//#include "merge-sort.h" 
-#include "traced-merge-sort.h" // within algolib namespace
+#include "merge-sort.h" 
+//#include "traced-merge-sort.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
