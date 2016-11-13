@@ -23,7 +23,7 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C) noexcept
 {
    // allocate a working buffer for our merges
-   std::unique_ptr<T[]> work_buffer { new T[last + 1 - first] };
+   std::unique_ptr<T[]> work_buffer { std::make_unique<T[]>(last + 1 - first) };
     
    merge_sort(first, last, work_buffer.get(), C);
 }
