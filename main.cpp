@@ -45,7 +45,6 @@ int main(int argc, char** argv)
     
   less<int> compare; 
  
-  //algolib::iter_merge_sort<int>(&a2[0], &a2[31], compare);
   algolib::merge_sort<int>(&a2[0], &a2[31], compare);
 
   cout << "\n------------------\n" <<  "Output of iterative merge sort: " << "\n";
