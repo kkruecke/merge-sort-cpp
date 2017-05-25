@@ -1,6 +1,6 @@
 #include <cstdlib>
-#include "merge-sort.h" 
-//#include "traced-merge-sort.h" // within algolib namespace
+//--#include "merge-sort.h" 
+#include "traced-merge-sort.h" // within algolib namespace
 #include <iostream>
 #include <functional>
 #include <algorithm>
@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char** argv)
 { 
   array<int, 32> a;
-
+  
   auto n = a.size();
 
   generate(a.begin(), a.end(), [&]{ return n--; }); 
@@ -56,4 +56,3 @@ int main(int argc, char** argv)
   
   return 0;
 }
-

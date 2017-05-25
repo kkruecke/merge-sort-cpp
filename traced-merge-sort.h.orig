@@ -7,7 +7,6 @@
 #include <iterator>
 #include <algorithm>
 #include <map>
-#include <utility>
 #include <memory>
 
 namespace algolib {
@@ -26,8 +25,8 @@ class Animator {
 
   public:    
     
-    template<typename Iterator> static void print_stdout(Iterator start_of_array, Iterator first, Iterator last, int depth,
-                                                  Animator::section s, std::string suffix = std::string{}) noexcept;
+    template<typename Iterator> static void print_stdout(Iterator first, Iterator last, int depth,
+                                                         Animator::section s, std::string suffix = std::string{}) noexcept;
   };
        
 std::map<Animator::section, std::string>  Animator::mapping { {all, std::string("  all")}, 
@@ -35,14 +34,11 @@ std::map<Animator::section, std::string>  Animator::mapping { {all, std::string(
                          {right, std::string("right")}
                             };
                             
-template<typename Iterator> void Animator::print_stdout(Iterator start_of_array, Iterator first, Iterator last, int depth, Animator::section sec, \
-                         std::string suffix) noexcept
+template<typename Iterator> void Animator::print_stdout(Iterator first, Iterator last, int depth, Animator::section sec, std::string suffix) noexcept
 {
   std::string part = Animator::get_string(sec);
- 
-  std::cout << "At depth " << depth << ". "; 
-  
-  std::cout << "Subarray: " << "[" << first - start_of_array << ", " << last - start_of_array << "] " <<  part << ". ";
+
+  std::cout << "At depth " << depth << ". Section:  " << part << ": ";
     
   // Since last is the actual last element (and not one pass it), we  add one because copy() requires "one past".                          
   std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
@@ -56,11 +52,11 @@ template<typename Iterator> void Animator::print_stdout(Iterator start_of_array,
 template<typename Iterator> void print_array(Iterator start, Iterator end) noexcept
 {
     // print out merged array
-    std::cout << std::string(" { "); 
+    std::cout << std::string(" [ "); 
             
     std::copy(start, end, std::ostream_iterator<decltype(*start)>(std::cout, " "));
 
-    std::cout << std::string("} "); 
+    std::cout << std::string("] "); 
 }
 
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
@@ -98,12 +94,10 @@ static Iterator orig_data_struct_last;
 
   } 
 
-  auto size_of = sizeof(*first);
-
   // base case: the range [first, last] can no longer be subdivided.
   if (first < last) {
-      
-      Animator::print_stdout(orig_data_struct_first, first, last, depth, sec);
+
+      Animator::print_stdout(first, last, depth, sec);
 
       /*
        * 1. Divide data structure in a left, first half and second or right half.
@@ -128,7 +122,7 @@ static Iterator orig_data_struct_last;
       
   } else {
 
-      Animator::print_stdout(orig_data_struct_first, first, last, depth, sec, std::string(" <-- Recursion ends. No merge."));
+      Animator::print_stdout(first, last, depth, sec, std::string(" <-- Recursion ends. No merge."));
   }
 }
 
