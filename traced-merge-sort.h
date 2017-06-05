@@ -153,11 +153,11 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
 
     print_array(first1, last1 +  1);
 
-    std::cout << " with right array";
+    std::cout << "\n            with right array";
 
     print_array(first2, last2 +  1);
 
-    std::cout <<  std::string(" ---> "); // << "\n                    ";
+    std::cout <<  std::string("\n            ---> "); // << "\n                    ";
 
     int index = 0;
     
