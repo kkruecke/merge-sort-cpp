@@ -31,8 +31,8 @@ class Animator {
   };
        
 std::map<Animator::section, std::string>  Animator::mapping { {all, std::string("  all")}, 
-                         {left, std::string(" left")},
-                         {right, std::string("right")}
+                         {left, std::string(" left half")},
+                         {right, std::string("right half")}
                             };
                             
 template<typename Iterator> void Animator::print_stdout(Iterator start_of_array, Iterator first, Iterator last, int depth, Animator::section sec, \
@@ -42,12 +42,14 @@ template<typename Iterator> void Animator::print_stdout(Iterator start_of_array,
  
   std::cout << "At depth " << depth << ". "; 
   
-  std::cout << "Subarray: " << "[" << first - start_of_array << ", " << last - start_of_array << "] " <<  part << ". ";
+  std::cout << part << " range: " << "[" << first - start_of_array << ", " << last - start_of_array << "] " << ". {" ;
     
   // Since last is the actual last element (and not one pass it), we  add one because copy() requires "one past".                          
   std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
-        
-  std::cout << suffix << std::endl;
+
+  std::cout << 8;   // output backspace to overwrite extra space. 
+
+  std::cout << '}' << suffix << std::endl;
 }
 
 /*
