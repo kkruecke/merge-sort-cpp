@@ -56,11 +56,13 @@ template<typename Iterator> void Animator::print_stdout(Iterator start_of_array,
 template<typename Iterator> void print_array(Iterator start, Iterator end) noexcept
 {
     // print out merged array
-    std::cout << std::string(" { "); 
+    std::cout << std::string(" {"); 
             
     std::copy(start, end, std::ostream_iterator<decltype(*start)>(std::cout, " "));
+    
+    std::cout << 8; // backspace character (or overwrite extra space).
 
-    std::cout << std::string("} "); 
+    std::cout << std::string("}"); 
 }
 
 template<typename Iterator, typename Comparator> static void merge(Iterator first, Iterator mid, Iterator last,
@@ -145,11 +147,11 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
      * Print out input arrays to be merged....
      */
 
-    std::cout << "Merging at depth " << depth << " : left half";
+    std::cout << "At depth " << depth << ". Merge left array";
 
     print_array(first1, last1 +  1);
 
-    std::cout << " right half";
+    std::cout << " with right array";
 
     print_array(first2, last2 +  1);
 
