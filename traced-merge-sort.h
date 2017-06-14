@@ -47,7 +47,7 @@ template<typename Iterator> void Animator::print_stdout(Iterator start_of_array,
   // Since last is the actual last element (and not one pass it), we  add one because copy() requires "one past".                          
   std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
 
-  std::cout << 8;   // output backspace to overwrite extra space. 
+  std::cout << '\b';   // output backspace to overwrite extra space. 
 
   std::cout << '}' << suffix << std::endl;
 }
@@ -62,7 +62,7 @@ template<typename Iterator> void print_array(Iterator start, Iterator end) noexc
             
     std::copy(start, end, std::ostream_iterator<decltype(*start)>(std::cout, " "));
     
-    std::cout << 8; // backspace character (or overwrite extra space).
+    std::cout << '\b'; // backspace character (or overwrite extra space).
 
     std::cout << std::string("}"); 
 }
@@ -149,15 +149,15 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
      * Print out input arrays to be merged....
      */
 
-    std::cout << "At depth " << depth << ". Merge left array";
+    std::cout << "At depth " << depth << ". Merging";
 
     print_array(first1, last1 +  1);
 
-    std::cout << "\n            with right array";
+    std::cout << "\n            and    ";
 
     print_array(first2, last2 +  1);
 
-    std::cout <<  std::string("\n            ---> "); // << "\n                    ";
+    std::cout <<  std::string("\n            --->   "); // << "\n                    ";
 
     int index = 0;
     
