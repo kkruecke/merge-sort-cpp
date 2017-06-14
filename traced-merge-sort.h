@@ -42,7 +42,7 @@ template<typename Iterator> void Animator::print_stdout(Iterator start_of_array,
  
   std::cout << "At depth " << depth << ". "; 
   
-  std::cout << part << " range: " << "[" << first - start_of_array << ", " << last - start_of_array << "] " << ". {" ;
+  std::cout << part << " range: " << "[" << first - start_of_array << ", " << last - start_of_array << "]" << ". {" ;
     
   // Since last is the actual last element (and not one pass it), we  add one because copy() requires "one past".                          
   std::copy(first, last + 1, std::ostream_iterator<decltype(*first)>(std::cout, " "));
