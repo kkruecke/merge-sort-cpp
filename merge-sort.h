@@ -32,31 +32,31 @@ template<typename T, typename Iterator, typename Comparator> void merge_sort(Ite
 template<typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last,
                                                                  const Iterator buffer, Comparator c)  noexcept
 {
-    // Base case: the range [first, last] can no longer be subdivided; it is of length one.
-    if (first < last) {
+  // Base case: the range [first, last] can no longer be subdivided; it is of length one.
+  if (first < last) {
 
-        /*
-         * 1. Divide data structure in a left, first half and second, right half.
-         */ 
-        
-        Iterator mid = first + (last - first) / 2; // Note: division binds first before first is added.
-        
-        /*
-         * Recurse on the left half.
-         */
-        algolib::merge_sort(first, mid, buffer, c);    
+      /*
+       * 1. Divide data structure in a left, first half and second, right half.
+       */ 
+      
+      Iterator mid = first + (last - first) / 2; // Note: division binds first before first is added.
+      
+      /*
+       * Recurse on the left half.
+       */
+      algolib::merge_sort(first, mid, buffer, c);    
 
-        /*
-         * When left half recursion ends, recurse on right half of [first, last], which is [mid + 1, last]. 
-         * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
-         */
-        algolib::merge_sort(mid + 1, last, buffer, c);
+      /*
+       * When left half recursion ends, recurse on right half of [first, last], which is [mid + 1, last]. 
+       * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
+       */
+      algolib::merge_sort(mid + 1, last, buffer, c);
 
-        /*
-         * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
-         */ 
-        algolib::merge(first, mid, last, buffer, c); // merge-and-sort step
-    }
+      /*
+       * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
+       */ 
+      algolib::merge(first, mid, last, buffer, c); // merge-and-sort step
+  }
 }
 
 /*
