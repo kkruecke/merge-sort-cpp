@@ -96,13 +96,13 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
     // finish off the first sub-array, if necessary
     for (;first1 <= last1; ++first1, ++buffer_cursor) {
         
-        *buffer_cursor = *first1;
+        *buffer_cursor = std::move(*first1);
     }
     
     // finish off the second sub-array, if necessary
     for (;first2 <= last2; ++first2, ++buffer_cursor) {
         
-        *buffer_cursor = *first2;
+        *buffer_cursor = std::move(*first2);
     }
          
    // Copy the temp array to the original array
@@ -112,7 +112,7 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
    
    for (Iterator end = start + length; start != end;) {
         
-        *first++ = *start++;
+        *first++ = std::move(*start++);
    }
 }
 
