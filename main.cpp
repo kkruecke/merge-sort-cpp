@@ -1,6 +1,5 @@
 #include <cstdlib>
-//--#include "merge-sort.h" 
-#include "traced-merge-sort.h" // within algolib namespace
+#include "merge-sort.h" 
 #include <iostream>
 #include <functional>
 #include <algorithm>
@@ -45,6 +44,7 @@ int main(int argc, char** argv)
     
   less<int> compare; 
  
+  //algolib::iter_merge_sort<int>(&a2[0], &a2[31], compare);
   algolib::merge_sort<int>(&a2[0], &a2[31], compare);
 
   cout << "\n------------------\n" <<  "Output of iterative merge sort: " << "\n";

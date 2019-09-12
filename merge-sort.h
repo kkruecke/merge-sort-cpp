@@ -112,7 +112,8 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
    
    for (Iterator end = start + length; start != end;) {
         
-        *first++ = std::move(*start++);
+        *first = std::move(*start++);
+         ++first;   
    }
 }
 
@@ -131,7 +132,8 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
 {
     auto length = last + 1 - first;
 
-    std::unique_ptr<T[]> work_buffer { new T[length] };
+    //--std::unique_ptr<T[]> work_buffer { new T[length] };
+    std::unique_ptr<T[]> work_buffer = std::make_new<T[]>(length);
 
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
