@@ -44,18 +44,18 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
       /*
        * Recurse on the left half.
        */
-      algolib::merge_sort(first, mid, buffer, c);    
+      merge_sort(first, mid, buffer, c);    
 
       /*
        * When left half recursion ends, recurse on right half of [first, last], which is [mid + 1, last]. 
        * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
        */
-      algolib::merge_sort(mid + 1, last, buffer, c);
+      merge_sort(mid + 1, last, buffer, c);
 
       /*
        * 2. When recursion ends, merge the two sub arrays [first, mid] and [mid+1, last] into a sorted array in [first, last]
        */ 
-      algolib::merge(first, mid, last, buffer, c); // merge-and-sort step
+      merge(first, mid, last, buffer, c); // sort and merge step
   }
 }
 
@@ -133,7 +133,7 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
     auto length = last + 1 - first;
 
     //--std::unique_ptr<T[]> work_buffer { new T[length] };
-    std::unique_ptr<T[]> work_buffer = std::make_new<T[]>(length);
+    std::unique_ptr<T[]> work_buffer = std::make_unique<T[]>(length);
 
     /*
      * Traverse array input from beginning to end, sorting adjacent subarrays from the bottom up. Subarrays are always a power of 2
