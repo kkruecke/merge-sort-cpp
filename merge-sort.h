@@ -23,7 +23,7 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
  */
 template<typename T, typename Iterator, typename Comparator> void merge_sort(Iterator first, Iterator last, Comparator C) noexcept
 {
-   // allocate a working buffer for our merges
+   // Create a the working buffer for our merges.
    std::unique_ptr<T[]> work_buffer { std::make_unique<T[]>(last + 1 - first) };
     
    merge_sort(first, last, work_buffer.get(), C);
@@ -41,14 +41,17 @@ template<typename Iterator, typename Comparator> void merge_sort(Iterator first,
       
       Iterator mid = first + (last - first) / 2; // Note: division binds first before first is added.
       
-      /*
-       * Recurse on the left half.
+      /* Note: During the two merge_sort calls below, the prior indecies of [first, mid] and [mid+1, last] are implicitly saved on the stack
+       * before merge_sort recurses.
+       */
+
+      /*   
+       * sort the left half.
        */
       merge_sort(first, mid, buffer, c);    
 
       /*
-       * When left half recursion ends, recurse on right half of [first, last], which is [mid + 1, last]. 
-       * Note: Both left and right descents implictly save the indecies of [first, mid] and [mid+1, last] on the stack.
+       * The left half recursion ended, sort the right half, [mid + 1, last]. 
        */
       merge_sort(mid + 1, last, buffer, c);
 
