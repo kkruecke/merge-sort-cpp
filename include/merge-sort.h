@@ -124,18 +124,18 @@ template<typename Iterator, typename Comparator> static void merge(Iterator firs
  * Iterative version of Merge Sort 
  * ===============================
  *
- * Code below is a convert C++11 version of this java code:
- * http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
+ * Code below is a C++17 version of this java code: http://www.sinbadsoft.com/blog/a-recursive-and-iterative-merge-sort-implementations/
 */
 // Fwd reference
+//--template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
+//--                              T *work_buffer) noexcept; 
 template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator first, int start, int middle, int end, Comparator comparer,
-                              T *work_buffer) noexcept; 
+                              T work_buffer[]) noexcept; 
 
 template<typename T, typename Iterator, typename Comparator> Iterator iter_merge_sort(Iterator first, Iterator last, Comparator comparer) noexcept
 {
     auto length = last + 1 - first;
 
-    //--std::unique_ptr<T[]> work_buffer { new T[length] };
     std::unique_ptr<T[]> work_buffer = std::make_unique<T[]>(length);
 
     /*
