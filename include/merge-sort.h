@@ -143,23 +143,22 @@ template<typename T, typename Iterator, typename Comparator> Iterator iter_merge
      * in size, starting  size one (2 to the zero), then 2 (2 to the first), 4 (2 to the second) and so on. The number of iterations is:
      * log base 2(length) rounded up. 
      */
-    for (int width = 1; width <= length / 2 + 1; width *= 2) {
+    for (auto width = 1; width <= length / 2 + 1; width *= 2) {
         
         /*
          * merge adjacent subarrays of size width
          */  
 
-        for (int start = width; start < length; start += 2 * width)  { // (2 * width) == sum of lengths of both subarrays.
+        for (auto start = width; start < length; start += 2 * width)  // (2 * width) == sum of lengths of both subarrays.
 
             algolib::iter_merge(first, start - width, start, std::min<decltype(start)>(start + width, length), comparer, work_buffer.get()); 
-        }
     }
     
     return first;
 }
 
-template<typename T, typename Iterator, typename Comparator > static void iter_merge(Iterator input, int start, int middle, int end,
-                                                                                     Comparator comparer, T *work_buffer) noexcept
+template<typename T, typename Iterator, typename Comparator>
+static void iter_merge(Iterator input, int start, int middle, int end, Comparator comparer, T *work_buffer) noexcept
 {
     auto length = end - start;
 
